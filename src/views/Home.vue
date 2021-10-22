@@ -7,12 +7,12 @@
     />
     <ButtonDefault @btn-click="onClick()">Get Started</ButtonDefault>
 
-    <div class="containerImage">
-      <img class="imgHome imgHome__p1" src="../assets/images/1.png" alt="" />
-      <img class="imgHome imgHome__p2" src="../assets/images/2.png" alt="" />
-      <img class="imgHome imgHome__p3" src="../assets/images/3.png" alt="" />
-      <font-awesome-icon icon="comment-dots" class="imgHome imgHome__icon1" />
-      <font-awesome-icon icon="comment-dots" class="imgHome imgHome__icon2" />
+    <div class="container-image">
+      <img class="img-home img-home__p1" src="../assets/images/1.png" alt="" />
+      <img class="img-home img-home__p2" src="../assets/images/2.png" alt="" />
+      <img class="img-home img-home__p3" src="../assets/images/3.png" alt="" />
+      <font-awesome-icon icon="comment-dots" class="img-home img-home__icon1" />
+      <font-awesome-icon icon="comment-dots" class="img-home img-home__icon2" />
     </div>
   </div>
 </template>
@@ -27,9 +27,9 @@ export default {
   },
   methods: {
     onClick() {
-      console.log('clicked');
-    }
-  }
+      this.$router.push('/SignUp'); 
+    },
+  },
 };
 </script>
 
@@ -47,11 +47,11 @@ export default {
   margin-top: 30px;
 }
 
-.containerImage {
+.container-image {
   position: relative;
 }
 
-.imgHome {
+.img-home {
   position: absolute;
 
   &__p1 {
