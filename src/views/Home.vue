@@ -5,7 +5,8 @@
       alt="Groupmania logo"
       src="../assets/logo/icon-above-font.svg"
     />
-    <ButtonDefault>Get Started</ButtonDefault>
+    <ButtonDefault @btn-click="onClick()">Get Started</ButtonDefault>
+
     <div class="containerImage">
       <img class="imgHome imgHome__p1" src="../assets/images/1.png" alt="" />
       <img class="imgHome imgHome__p2" src="../assets/images/2.png" alt="" />
@@ -24,6 +25,11 @@ export default {
   components: {
     ButtonDefault,
   },
+  methods: {
+    onClick() {
+      console.log('clicked');
+    }
+  }
 };
 </script>
 

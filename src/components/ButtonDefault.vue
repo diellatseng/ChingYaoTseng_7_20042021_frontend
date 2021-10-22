@@ -1,11 +1,17 @@
 <template>
-  <button class="button rounded">
+  <button @click="onClick()" class="button rounded">
     <slot></slot>
   </button>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    onClick() {
+      this.$emit('btn-click')
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -17,6 +23,7 @@ export default {};
   padding: 1rem 2rem;
   font-size: 1.5rem;
   color: white;
+  cursor: pointer;
 
   &:hover {
     background-color: black;
