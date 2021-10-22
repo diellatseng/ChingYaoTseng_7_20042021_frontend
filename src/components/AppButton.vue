@@ -55,6 +55,7 @@ export default {
   border: none;
   padding: 1rem 2rem;
   font-size: 1.5rem;
+  font-weight: bold;
   text-align: center;
   text-decoration: none;
   color: white;

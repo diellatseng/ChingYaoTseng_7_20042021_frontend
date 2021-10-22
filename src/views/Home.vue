@@ -6,7 +6,6 @@
       src="../assets/logo/icon-above-font.svg"
     />
     <AppButton :to="{ name: 'SignUp' }" theme="rounded">Get Started</AppButton>
-
     <div class="container-image">
       <img class="img-home img-home__p1" src="../assets/images/1.png" alt="" />
       <img class="img-home img-home__p2" src="../assets/images/2.png" alt="" />
@@ -23,7 +22,7 @@ import AppButton from "@/components/AppButton.vue";
 export default {
   name: "Home",
   components: {
-    AppButton,
+    AppButton
   },
   methods: {
     onClick() {
