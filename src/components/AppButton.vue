@@ -51,7 +51,7 @@ export default {
 .button {
   transition-duration: 0.4s;
   width: 200px;
-  background-color: var(--color-primary);
+  background-color: $color-primary;
   padding: 1rem 2rem;
   font-size: 1.5rem;
   font-weight: bold;

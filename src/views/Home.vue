@@ -90,14 +90,14 @@ export default {
     top: -290px;
     right: -10px;
     font-size: 6rem;
-    color: var(--color-secondary);
+    color: $color-secondary;
   }
 
   &__icon2 {
     top: -230px;
     right: -100px;
     font-size: 5rem;
-    color: var(--color-accent);
+    color: $color-accent;
     transform: rotateY(180deg);
   }
 }
