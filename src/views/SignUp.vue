@@ -13,7 +13,7 @@
       <label for="password">Password</label>
     </div>
 
-    <input type="submit" value="Next">
+    <input type="submit" value="Next" />
   </form>
 </template>
 
@@ -22,33 +22,49 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-    #sign-up {
-        margin: auto;
-    }
+#sign-up {
+    width: 100%;
+    margin: auto 1.5rem;
+}
 
-    .form-control {
-        position: relative;
-        margin: 20px 0;
+.form-control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 30px 0;
 
-        label {
-            position: absolute;
-            display: block;
-            left: 0;
-            top: 0;
-            padding: 0 0.3rem;
-            margin: 0 0.5rem;
-            transform: translateY(-50%);
-            background-color: white;
-            color: gray;
+  label {
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    padding: 0 0.3rem;
+    margin: 0 0.5rem;
+    transform: translateY(-50%);
+    background-color: white;
+    color: $color-primary-lighten;
+  }
+
+  input {
+    height: 50px;
+    margin: 5px;
+    padding: 3px 10px;
+    border: 3px solid $color-primary-lighten;
+    border-radius: 5px;
+    font-size: 1.2rem;
+
+        &:focus {
+            border: 3px solid $color-primary-darken;
         }
 
-        input {
-            height: 40px;
-            margin: 5px;
-            padding: 3px 7px;
-            border: 2px solid ;
-           
-            font-size: 1.5rem;
+        &:focus + label {
+            color: $color-primary-darken;
         }
-    }
+
+        &:focus-visible {
+            outline: none;
+        }
+
+  }
+}
 </style>
