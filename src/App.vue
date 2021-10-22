@@ -4,12 +4,18 @@
 
 <style>
 
+:root {
+  --primary: #b35ae0;
+  --secondary: #f3d140;
+  --accent: #33b9db;
+}
+
 body {
-  background-image: linear-gradient(62deg, #f3d140 0%, #33b9db 100%);
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  padding:32px;
+  margin: 0;
+  font-size: 16px;
 }
 
 </style>
