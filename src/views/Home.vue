@@ -6,7 +6,7 @@
       <img class="imgHome imgHome__p1" src="../assets/images/1.png" alt="" />
       <img class="imgHome imgHome__p2" src="../assets/images/2.png" alt="" />
       <img class="imgHome imgHome__p3" src="../assets/images/3.png" alt="" />
-      <i class="far fa-comment-dots"></i>
+      <font-awesome-icon class="imgHome__icon1" icon="font-awesome-icon"></font-awesome-icon>
     </div>
   </div>
 </template>
