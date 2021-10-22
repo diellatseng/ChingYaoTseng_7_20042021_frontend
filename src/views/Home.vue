@@ -5,7 +5,7 @@
       alt="Groupmania logo"
       src="../assets/logo/icon-above-font.svg"
     />
-    <ButtonDefault @btn-click="onClick()">Get Started</ButtonDefault>
+    <AppButton :to="{ name: 'SignUp' }" theme="rounded">Get Started</AppButton>
 
     <div class="container-image">
       <img class="img-home img-home__p1" src="../assets/images/1.png" alt="" />
@@ -18,16 +18,16 @@
 </template>
 
 <script>
-import ButtonDefault from "@/components/ButtonDefault.vue";
+import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "Home",
   components: {
-    ButtonDefault,
+    AppButton,
   },
   methods: {
     onClick() {
-      this.$router.push('/SignUp'); 
+      this.$router.push("/SignUp");
     },
   },
 };
