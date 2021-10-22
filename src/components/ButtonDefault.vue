@@ -5,27 +5,26 @@
 </template>
 
 <script>
-  export default {};
+export default {};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .button {
   transition-duration: 0.4s;
   width: 200px;
-  background-color: var(--primary);
+  background-color: var(--color-primary);
   border: none;
-	padding: 1rem 2rem;
+  padding: 1rem 2rem;
   font-size: 1.5rem;
   color: white;
-}
 
-.button:hover {
-  background-color: #212921; /* Green */
-  color: white;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
 }
-
 .rounded {
-    border-radius: 3rem;
+  border-radius: 3rem;
 }
 </style>
 

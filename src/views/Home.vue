@@ -1,30 +1,33 @@
 <template>
   <div class="home">
-    <img class="logo" alt="Groupmania logo" src="../assets/logo/icon-left-font-monochrome-black.svg" />
+    <img
+      class="logo"
+      alt="Groupmania logo"
+      src="../assets/logo/icon-above-font.svg"
+    />
     <ButtonDefault>Get Started</ButtonDefault>
     <div class="containerImage">
       <img class="imgHome imgHome__p1" src="../assets/images/1.png" alt="" />
       <img class="imgHome imgHome__p2" src="../assets/images/2.png" alt="" />
       <img class="imgHome imgHome__p3" src="../assets/images/3.png" alt="" />
-      <font-awesome-icon class="imgHome__icon1" icon="font-awesome-icon"></font-awesome-icon>
+      <font-awesome-icon icon="comment-dots" class="imgHome imgHome__icon1" />
+      <font-awesome-icon icon="comment-dots" class="imgHome imgHome__icon2" />
     </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import ButtonDefault from '@/components/ButtonDefault.vue'
+import ButtonDefault from "@/components/ButtonDefault.vue";
 
 export default {
   name: "Home",
   components: {
-    ButtonDefault
+    ButtonDefault,
   },
 };
 </script>
 
 <style scoped lang="scss">
-
 .home {
   width: 100%;
   display: flex;
@@ -35,7 +38,7 @@ export default {
 
 .logo {
   width: 200px;
-  margin: 150px 0 50px 0;
+  margin-top: 30px;
 }
 
 .containerImage {
@@ -44,25 +47,39 @@ export default {
 
 .imgHome {
   position: absolute;
-}
 
-.imgHome__p1 {
-  top : -260px;
-  right: -330px;
-  width: 190px;
-  transform: rotate(-40deg);
-}
+  &__p1 {
+    top: -260px;
+    right: -330px;
+    width: 190px;
+    transform: rotate(-40deg);
+  }
 
-.imgHome__p2 {
-  top: 150px;
-  left: 20px;
-  width: 240px;
-}
+  &__p2 {
+    top: 150px;
+    left: 20px;
+    width: 240px;
+  }
 
-.imgHome__p3 {
-  top: 150px;
-  right: 0px;
-  width: 250px;
-}
+  &__p3 {
+    top: 150px;
+    right: 0px;
+    width: 250px;
+  }
 
+  &__icon1 {
+    top: 60px;
+    right: -10px;
+    font-size: 6rem;
+    color: var(--color-secondary);
+  }
+
+  &__icon2 {
+    top: 100px;
+    right: -100px;
+    font-size: 5rem;
+    color: var(--color-accent);
+    transform: rotateY(180deg);
+  }
+}
 </style>

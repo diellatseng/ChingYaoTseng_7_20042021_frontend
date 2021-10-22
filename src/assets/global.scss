@@ -1,0 +1,13 @@
+:root {
+  --color-primary: #b35ae0;
+  --color-secondary: #f3d140;
+  --color-accent: #33b9db;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  font-size: 16px;
+}
