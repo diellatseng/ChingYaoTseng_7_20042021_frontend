@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-      <AppButton size="small">test</AppButton>
-      <h1>hello world</h1>
+    <h1>hello world</h1>
+    <AppButton size="small"
+      >Publish<font-awesome-icon icon="fa-solid fa-paper-plane" class="icon"
+    /></AppButton>
   </div>
 </template>
 
@@ -14,3 +16,14 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.container {
+  padding: 20px;
+  margin: 15px;
+  border: 2px solid $color-fade;
+}
+.icon {
+  margin-left: 0.5em;
+}
+</style>

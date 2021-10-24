@@ -40,5 +40,10 @@ export default {};
 
 .icon {
   display: block;
+  color: black;
+
+    &:visited {
+      color: $color-primary;
+    }
 }
 </style>

@@ -30,14 +30,6 @@ body {
   color: $color-primary;
 }
 
-.icon {
-  color: black;
-
-    &:visited {
-      color: $color-primary;
-    }
-}
-
 @media (min-width: 768px) {
   .container {
     width: 750px;
