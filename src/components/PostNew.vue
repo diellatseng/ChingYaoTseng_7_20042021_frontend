@@ -2,7 +2,7 @@
   <div class="container">
     <form action="post">
       <div class="form-control">
-        <label for="post">Write a new post...</label>
+        <label for="post"><slot></slot></label>
         <textarea name="post" rows="4" cols="25" placeholder="Say something..." />
       </div>
       <AppButton size="small">

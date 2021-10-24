@@ -1,18 +1,21 @@
 <template>
   <div class="div">
-    <Header />
-    <PostNew></PostNew>
+    <TheHeader />
+    <PostNew>Write a new post...</PostNew>
+    <Posts :posts="posts" />
   </div>
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
-import PostNew from "../components/PostNew.vue";
+import TheHeader from "@/components/TheHeader.vue";
+import PostNew from "@/components/PostNew.vue";
+import Posts from "@/components/Posts.vue";
 
 export default {
   components: {
-    Header,
+    TheHeader,
     PostNew,
+    Posts,
   },
   data() {
     return {
@@ -24,14 +27,16 @@ export default {
       //Should use API to fetch data
       {
         id: 1,
+        name: "John Smith",
         text: "Hello World. This is a post from the first user.",
-        day: "October 24th at 21:14",
+        date: "October 24th at 21:14",
         likes: 5,
       },
       {
         id: 2,
+        name: "Mary Lane",
         text: "This is another post from another user. Yes!",
-        day: "October 24th at 23:50",
+        date: "October 24th at 23:50",
         likes: 0,
       },
     ];
