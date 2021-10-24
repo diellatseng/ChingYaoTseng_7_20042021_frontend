@@ -13,7 +13,7 @@
         <input type="text" name="password" placeholder="Your password" />
         <label for="password">Password</label>
       </div>
-    <AppButton theme="rounded">Next</AppButton>
+    <AppButton @click="onClick" theme="rounded">Next</AppButton>
     </form>
   </div>
 </template>
@@ -23,7 +23,12 @@ import AppButton from "@/components/AppButton.vue";
 
 export default {
   components: {
-    AppButton,
+    AppButton
+  },
+  methods: {
+    onClick () {
+      console.log('clicked')
+    }
   }
 };
 </script>
