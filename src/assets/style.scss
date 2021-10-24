@@ -1,10 +1,11 @@
-@import '~normalize.css';
+@import "~normalize.css";
 @import "~@/assets/scss/_variables.scss";
 
-@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
 
-html, body {
-  font-family: 'Oxygen', sans-serif;
+html,
+body {
+  font-family: "Oxygen", sans-serif;
 }
 
 body {
@@ -19,8 +20,22 @@ body {
   margin-left: auto;
 }
 
+.container-fluid {
+  width: 100%;
+  padding-right: 0;
+  padding-left: 0;
+}
+
 .link {
   color: $color-primary;
+}
+
+.icon {
+  color: black;
+
+    &:visited {
+      color: $color-primary;
+    }
 }
 
 @media (min-width: 768px) {
