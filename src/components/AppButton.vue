@@ -19,7 +19,8 @@ export default {
         rounded: 'rounded'
       },
       sizes: {
-        normal: ''
+        normal: '',
+        small: 'small'
       }
     }
   },
@@ -50,19 +51,20 @@ export default {
 
 <style scoped lang="scss">
 .button {
-  display:flex;
   width:150px;
+  display:flex;
   justify-content:center;
   align-items:center;
-  transition-duration: 0.4s;
-  background-color: $color-primary;
   margin: auto;
   padding: 1rem 2rem;
+  border-radius: 5px;
+  transition-duration: 0.4s;
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
   color: white;
+  background-color: $color-primary;
   cursor: pointer;
 
   &:hover {
@@ -72,5 +74,10 @@ export default {
 }
 .rounded {
   border-radius: 3rem;
+}
+
+.small {
+  padding-top: .3rem;
+  padding-bottom: .3rem;
 }
 </style>
