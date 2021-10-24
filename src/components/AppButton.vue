@@ -77,7 +77,9 @@ export default {
 }
 
 .small {
+  width: auto;
   padding-top: .3rem;
   padding-bottom: .3rem;
+  font-size: 1.2rem;
 }
 </style>
