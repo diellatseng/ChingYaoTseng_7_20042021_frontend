@@ -11,13 +11,12 @@
       >
       <router-link to="/login" class="link">Log In</router-link>
     </div>
-    <div class="container-image">
-      <img class="img-home img-home__p1" src="../assets/images/1.png" alt="" />
-      <img class="img-home img-home__p2" src="../assets/images/2.png" alt="" />
-      <img class="img-home img-home__p3" src="../assets/images/3.png" alt="" />
-      <font-awesome-icon icon="comment-dots" class="img-home img-home__icon1" />
-      <font-awesome-icon icon="comment-dots" class="img-home img-home__icon2" />
-    </div>
+    <div class="container-image"></div>
+    <img class="img-home img-home__p1" src="../assets/images/1.png" alt="" />
+    <img class="img-home img-home__p2" src="../assets/images/2.png" alt="" />
+    <img class="img-home img-home__p3" src="../assets/images/3.png" alt="" />
+    <font-awesome-icon icon="comment-dots" class="img-home img-home__icon1" />
+    <font-awesome-icon icon="comment-dots" class="img-home img-home__icon2" />
   </div>
 </template>
 
@@ -38,9 +37,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .home {
+  position: relative;
   width: 100%;
-    min-height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -69,34 +70,34 @@ export default {
   position: absolute;
 
   &__p1 {
-    top: -620px;
-    right: -330px;
-    width: 190px;
+    top: 100px;
+    right: -100px;
+    width: 150px;
     transform: rotate(-40deg);
   }
 
   &__p2 {
-    top: -200px;
-    left: 20px;
-    width: 240px;
+    top: 470px;
+    left: -50px;
+    width: 220px;
   }
 
   &__p3 {
-    top: -200px;
-    right: 0px;
-    width: 250px;
+    top: 470px;
+    right: -50px;
+    width: 220px;
   }
 
   &__icon1 {
-    top: -290px;
-    right: -10px;
+    top: 380px;
+    left: 110px;
     font-size: 6rem;
     color: $color-secondary;
   }
 
   &__icon2 {
-    top: -230px;
-    right: -100px;
+    top: 440px;
+    right: 100px;
     font-size: 5rem;
     color: $color-accent;
     transform: rotateY(180deg);
