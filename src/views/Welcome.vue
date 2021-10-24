@@ -11,11 +11,29 @@
       >
       <router-link to="/login" class="link">Log In</router-link>
     </div>
-    <img class="img-welcome img-welcome__p1" src="../assets/images/1.png" alt="" />
-    <img class="img-welcome img-welcome__p2" src="../assets/images/2.png" alt="" />
-    <img class="img-welcome img-welcome__p3" src="../assets/images/3.png" alt="" />
-    <font-awesome-icon icon="comment-dots" class="img-welcome img-welcome__icon1" />
-    <font-awesome-icon icon="comment-dots" class="img-welcome img-welcome__icon2" />
+    <img
+      class="img-welcome img-welcome__p1"
+      src="../assets/images/1.png"
+      alt=""
+    />
+    <img
+      class="img-welcome img-welcome__p2"
+      src="../assets/images/2.png"
+      alt=""
+    />
+    <img
+      class="img-welcome img-welcome__p3"
+      src="../assets/images/3.png"
+      alt=""
+    />
+    <font-awesome-icon
+      icon="fa-solid comment-dots"
+      class="img-welcome img-welcome__icon1"
+    ></font-awesome-icon>
+    <font-awesome-icon
+      icon="fa-solid comment-dots"
+      class="img-welcome img-welcome__icon2"
+    ></font-awesome-icon>
   </div>
 </template>
 
@@ -36,6 +54,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .welcome {
   position: relative;
