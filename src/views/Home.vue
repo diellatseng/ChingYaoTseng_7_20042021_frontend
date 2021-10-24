@@ -5,7 +5,7 @@
       alt="Groupmania logo"
       src="../assets/logo/icon-left-font-monochrome-black.svg"
     />
-    <div class="container">
+    <div class="container-home">
       <AppButton :to="{ name: 'SignUp' }" theme="rounded"
         >Get Started</AppButton
       >
@@ -40,6 +40,7 @@ export default {
 <style scoped lang="scss">
 .home {
   width: 100%;
+    min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +53,7 @@ export default {
   padding: 20px;
 }
 
-.container {
+.container-home {
   display: flex;
   flex-direction: column;
   align-items: center;

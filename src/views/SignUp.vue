@@ -1,30 +1,37 @@
 <template>
-  <form id="sign-up">
-    <div class="form-control">
-      <input type="text" name="full-name" placeholder="Tony Stark" />
-      <label for="full-name">Full Name</label>
-    </div>
-    <div class="form-control">
-      <input type="text" name="email" placeholder="name@domain.com" />
-      <label for="email">Email</label>
-    </div>
-    <div class="form-control">
-      <input type="text" name="password" placeholder="Your password" />
-      <label for="password">Password</label>
-    </div>
-
-    <input type="submit" value="Next" />
-  </form>
+  <div class="container">
+    <form id="sign-up">
+      <div class="form-control">
+        <input type="text" name="full-name" placeholder="Tony Stark" />
+        <label for="full-name">Full Name</label>
+      </div>
+      <div class="form-control">
+        <input type="text" name="email" placeholder="name@domain.com" />
+        <label for="email">Email</label>
+      </div>
+      <div class="form-control">
+        <input type="text" name="password" placeholder="Your password" />
+        <label for="password">Password</label>
+      </div>
+    <AppButton theme="rounded">Next</AppButton>
+    </form>
+  </div>
 </template>
 
 <script>
-export default {};
+import AppButton from "@/components/AppButton.vue";
+
+export default {
+  components: {
+    AppButton,
+  }
+};
 </script>
 
 <style lang="scss" scoped>
+
 #sign-up {
-    width: 100%;
-    margin: auto 1.5rem;
+  width: 100%;
 }
 
 .form-control {
@@ -53,18 +60,17 @@ export default {};
     border-radius: 5px;
     font-size: 1.2rem;
 
-        &:focus {
-            border: 3px solid $color-primary-darken;
-        }
+    &:focus {
+      border: 3px solid $color-primary-darken;
+    }
 
-        &:focus + label {
-            color: $color-primary-darken;
-        }
+    &:focus + label {
+      color: $color-primary-darken;
+    }
 
-        &:focus-visible {
-            outline: none;
-        }
-
+    &:focus-visible {
+      outline: none;
+    }
   }
 }
 </style>

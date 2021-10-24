@@ -49,9 +49,13 @@ export default {
 
 <style scoped lang="scss">
 .button {
+  display:flex;
+  width:150px;
+  justify-content:center;
+  align-items:center;
   transition-duration: 0.4s;
-  width: 200px;
   background-color: $color-primary;
+  margin: auto;
   padding: 1rem 2rem;
   font-size: 1.5rem;
   font-weight: bold;
