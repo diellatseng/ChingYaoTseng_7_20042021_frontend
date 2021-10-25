@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <router-link to="/postswall">
+    <div @click="reload">
       <img
         class="logo"
         alt="Groupmania logo"
         src="../assets/logo/icon-left-font-monochrome-black.svg"
       />
-    </router-link>
+    </div>
 
     <router-link to="/profile">
       <font-awesome-icon icon="fa-regular fa-user" size="lg" class="icon" />
@@ -15,7 +15,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'TheHeader',
+  methods: {
+    reload () {
+      let path = this.$route.path;
+      if (path == '/postwall') {
+        this.$forceUpdate();
+      } else {
+        this.$router.push("/postswall");
+      }
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
