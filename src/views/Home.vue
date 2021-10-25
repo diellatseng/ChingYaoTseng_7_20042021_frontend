@@ -6,7 +6,7 @@
       src="../assets/logo/icon-left-font-monochrome-black.svg"
     />
 
-    <div class="form">
+    <div class="forms">
       <div class="container">
         <!-- Log In Form -->
         <form
@@ -105,7 +105,7 @@ body {
   padding: 20px;
 }
 
-.form {
+.forms {
   width: 100%;
   margin: auto;
   padding-bottom: 120px;
