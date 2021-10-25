@@ -6,22 +6,32 @@
       src="../assets/logo/icon-left-font-monochrome-black.svg"
     />
     <div class="container-home">
-      <AppButton :to="{ name: 'LogIn' }" theme="rounded"
-        >Log in</AppButton
+      <div class="container">
+        <form id="log-in">
+          <div class="form-control">
+            <input type="text" name="email" placeholder="name@domain.com" />
+            <label for="email">Email</label>
+          </div>
+          <div class="form-control">
+            <input type="text" name="password" placeholder="Your password" />
+            <label for="password">Password</label>
+          </div>
+          <AppButton :to="{ name: 'PostsWall' }" theme="rounded" id="logIn"
+            >Log In</AppButton
+          >
+        </form>
+      </div>
+      <AppButton
+        :to="{ name: 'signup' }"
+        size="small"
+        color="accent"
+        id="btnSignUp"
+        >New Account</AppButton
       >
-      <router-link to="/signup" class="link">Sign Up</router-link>
     </div>
     <img class="img-home img-home__p1" src="../assets/images/1.png" alt="" />
     <img class="img-home img-home__p2" src="../assets/images/2.png" alt="" />
     <img class="img-home img-home__p3" src="../assets/images/3.png" alt="" />
-    <font-awesome-icon
-      icon="fa-solid comment-dots"
-      class="img-home img-home__icon1"
-    ></font-awesome-icon>
-    <font-awesome-icon
-      icon="fa-solid comment-dots"
-      class="img-home img-home__icon2"
-    ></font-awesome-icon>
   </div>
 </template>
 
@@ -35,7 +45,7 @@ export default {
   },
   methods: {
     onClick() {
-      this.$router.push("/LogIn");
+      this.$router.push("/postswall");
     },
   },
 };
@@ -65,11 +75,53 @@ body {
 }
 
 .container-home {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
   margin: auto;
   padding-bottom: 120px;
+}
+
+#sign-up {
+  width: 100%;
+}
+
+.form-control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 30px 0;
+
+  label {
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    padding: 0 0.3rem;
+    margin: 0 0.5rem;
+    transform: translateY(-50%);
+    background-color: white;
+    color: $color-primary-lighten;
+  }
+
+  input {
+    height: 50px;
+    margin: 5px;
+    padding: 3px 10px;
+    border: 3px solid $color-primary-lighten;
+    border-radius: 5px;
+    font-size: 1.2rem;
+
+    &:focus {
+      border: 3px solid $color-primary-darken;
+    }
+
+    &:focus + label {
+      color: $color-primary-darken;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
 }
 
 .container-image {
@@ -80,42 +132,39 @@ body {
   position: absolute;
 
   &__p1 {
-    top: 100px;
+    top: 80px;
     right: -100px;
     width: 150px;
     transform: rotate(-40deg);
+    z-index: -1;
   }
 
   &__p2 {
     top: 470px;
     left: -50px;
     width: 220px;
+    z-index: -1;
   }
 
   &__p3 {
     top: 470px;
     right: -50px;
     width: 220px;
-  }
-
-  &__icon1 {
-    top: 380px;
-    left: 110px;
-    font-size: 6rem;
-    color: $color-secondary;
-  }
-
-  &__icon2 {
-    top: 440px;
-    right: 100px;
-    font-size: 5rem;
-    color: $color-accent;
-    transform: rotateY(180deg);
+    z-index: -1;
   }
 }
 
 .link {
   margin: 1rem;
   font-size: 1.5rem;
+}
+
+#logIn {
+  width: auto;
+  margin-bottom: 50px;
+}
+
+#btnSignUp {
+  width: 120px;
 }
 </style>

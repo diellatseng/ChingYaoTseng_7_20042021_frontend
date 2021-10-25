@@ -3,7 +3,7 @@
     class="button"
     @click.native="$emit('onClick', $event)"
     :to="to"
-    :class="[themes[theme], sizes[size]]"
+    :class="[themes[theme], sizes[size], colors[color]]"
   >
     <slot></slot>
   </router-link>
@@ -18,8 +18,11 @@ export default {
       },
       sizes: {
         normal: "",
-        small: "small",
+        small: "small"
       },
+      colors: {
+        accent: "accent"
+      }
     };
   },
 
@@ -43,6 +46,11 @@ export default {
         };
       },
     },
+    color: {
+      required: false,
+      type: String,
+      default: " "
+    }
   },
 };
 </script>
@@ -76,8 +84,12 @@ export default {
 
 .small {
   width: auto;
-  padding-top: 0.3rem;
-  padding-bottom: 0.3rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
   font-size: 1.2rem;
+}
+
+.accent {
+  background-color: $color-accent-darken;
 }
 </style>
