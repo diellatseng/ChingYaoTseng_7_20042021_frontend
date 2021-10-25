@@ -5,9 +5,15 @@
       alt="Groupmania logo"
       src="../assets/logo/icon-left-font-monochrome-black.svg"
     />
-    <div class="container-home">
+
+    <div class="form">
       <div class="container">
-        <form id="log-in">
+        <!-- Log In Form -->
+        <form
+          id="login-page"
+          v-if="currentForm.toLowerCase() === 'login'"
+          class="login-form"
+        >
           <div class="form-control">
             <input type="text" name="email" placeholder="name@domain.com" />
             <label for="email">Email</label>
@@ -19,16 +25,33 @@
           <AppButton :to="{ name: 'PostsWall' }" theme="rounded" id="logIn"
             >Log In</AppButton
           >
+          <p class="message">
+            Not registered?
+            <a href="#" @click.prevent="toggleForm()">Create an account</a>
+          </p>
+        </form>
+
+        <!-- Register Form -->
+        <form v-else class="register-form">
+          <div class="form-control">
+            <input type="text" name="full-name" placeholder="Tony Stark" />
+            <label for="full-name">Full Name</label>
+          </div>
+          <div class="form-control">
+            <input type="text" name="email" placeholder="name@domain.com" />
+            <label for="email">Email</label>
+          </div>
+          <div class="form-control">
+            <input type="text" name="password" placeholder="Your password" />
+            <label for="password">Password</label>
+          </div>
+          <AppButton @click="onClick" theme="rounded">Next</AppButton>
+          <p class="message">Already registered?
+          <a href="#" @click.prevent="toggleForm()">Log In</a></p>
         </form>
       </div>
-      <AppButton
-        :to="{ name: 'signup' }"
-        size="small"
-        color="accent"
-        id="btnSignUp"
-        >New Account</AppButton
-      >
     </div>
+
     <img class="img-home img-home__p1" src="../assets/images/1.png" alt="" />
     <img class="img-home img-home__p2" src="../assets/images/2.png" alt="" />
     <img class="img-home img-home__p3" src="../assets/images/3.png" alt="" />
@@ -40,12 +63,20 @@ import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      currentForm: "login",
+    };
+  },
   components: {
     AppButton,
   },
   methods: {
     onClick() {
       this.$router.push("/postswall");
+    },
+    toggleForm() {
+      this.currentForm = this.currentForm === "login" ? "register" : "login";
     },
   },
 };
@@ -74,14 +105,10 @@ body {
   padding: 20px;
 }
 
-.container-home {
+.form {
   width: 100%;
   margin: auto;
   padding-bottom: 120px;
-}
-
-#sign-up {
-  width: 100%;
 }
 
 .form-control {
@@ -159,9 +186,10 @@ body {
   font-size: 1.5rem;
 }
 
-#logIn {
-  width: auto;
-  margin-bottom: 50px;
+p {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1rem;
 }
 
 #btnSignUp {
