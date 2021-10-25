@@ -15,14 +15,15 @@ export default {
     return {
       themes: {
         rounded: "rounded",
+        squared: "squared",
       },
       sizes: {
         normal: "",
-        small: "small"
+        small: "small",
       },
       colors: {
-        accent: "accent"
-      }
+        danger: "danger",
+      },
     };
   },
 
@@ -42,15 +43,15 @@ export default {
       type: Object,
       default() {
         return {
-          name: "PostsWall",
+          name: "PostWall",
         };
       },
     },
     color: {
       required: false,
       type: String,
-      default: " "
-    }
+      default: " ",
+    },
   },
 };
 </script>
@@ -82,6 +83,10 @@ export default {
   border-radius: 3rem;
 }
 
+.squared {
+  border-radius: 0;
+}
+
 .small {
   width: auto;
   padding-top: 0.4rem;
@@ -89,7 +94,7 @@ export default {
   font-size: 1.2rem;
 }
 
-.accent {
-  background-color: $color-accent-darken;
+.danger {
+  background-color: $color-danger;
 }
 </style>

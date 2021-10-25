@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import PostsWall from '../views/PostsWall.vue'
+import PostWall from '../views/PostWall.vue'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Profile from '../views/Profile.vue'
@@ -16,8 +16,8 @@ const routes = [
   },
   {
     path: '/postwall',
-    name: 'PostsWall',
-    component: PostsWall
+    name: 'PostWall',
+    component: PostWall
   },
   {
     path: '/about',
@@ -32,6 +32,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

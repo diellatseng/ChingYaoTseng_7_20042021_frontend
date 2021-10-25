@@ -1,14 +1,17 @@
 $color-primary: #b35ae0;
 $color-secondary: #f3d140;
 $color-accent: #33b9db;
+$color-danger: #e8418f;
 $color-fade: #cccccc;
 
 $color-primary-lighten: lighten($color-primary, 10%);
 $color-secondary-lighten: lighten($color-secondary, 10%);
 $color-accent-lighten: lighten($color-accent, 10%);
+$color-danger-lighten: lighten($color-danger, 10%);
 $color-fade-lighten: lighten($color-fade, 10%);
 
 $color-primary-darken: darken($color-primary, 10%);
 $color-secondary-darken: darken($color-secondary, 10%);
 $color-accent-darken: darken($color-accent, 10%);
+$color-danger-darken: darken($color-danger, 10%);
 $color-fade-darken: darken($color-fade, 10%);

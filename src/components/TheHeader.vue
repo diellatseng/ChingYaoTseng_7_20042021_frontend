@@ -23,7 +23,7 @@ export default {
       if (path == '/postwall') {
         this.$forceUpdate();
       } else {
-        this.$router.push("/postswall");
+        this.$router.push("/postwall");
       }
     }
   }
@@ -35,7 +35,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 15px;
+  padding-top: 15px;
   padding-bottom: 10px;
 }
 

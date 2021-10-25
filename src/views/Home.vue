@@ -22,7 +22,7 @@
             <input type="text" name="password" placeholder="Your password" />
             <label for="password">Password</label>
           </div>
-          <AppButton :to="{ name: 'PostsWall' }" theme="rounded" id="logIn"
+          <AppButton :to="{ name: 'PostWall' }" theme="rounded" id="logIn"
             >Log In</AppButton
           >
           <p class="message">
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     onClick() {
-      this.$router.push("/postswall");
+      this.$router.push("/postwall");
     },
     toggleForm() {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
