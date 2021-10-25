@@ -45,7 +45,7 @@
             <input type="text" name="password" placeholder="Your password" />
             <label for="password">Password</label>
           </div>
-          <AppButton @click="onClick" theme="rounded">Next</AppButton>
+          <AppButton @click.native="onClick" theme="rounded">Next</AppButton>
           <p class="message">Already registered?
           <a href="#" @click.prevent="toggleForm()">Log In</a></p>
         </form>
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     onClick() {
-      this.$router.push("/postwall");
+      this.$router.push("/postwall"); //Add authorization
     },
     toggleForm() {
       this.currentForm = this.currentForm === "login" ? "register" : "login";

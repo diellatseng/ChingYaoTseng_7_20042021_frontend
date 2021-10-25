@@ -1,5 +1,5 @@
 <template>
-  <div class="profile">
+  <div id="profile">
     <TheHeader />
     <div class="container">
       <div class="profile__card">
@@ -11,7 +11,7 @@
           <h2>Mary Jane</h2>
         </div>
       </div>
-      <AppButton @click.prevent="onClick" theme="rounded">Log Out</AppButton>
+      <AppButton @click.native="logout" theme="rounded">Log Out</AppButton>
     </div>
     <AppButton theme="squared" size="small" color="danger" id="btnDelete"
       >Delete Account</AppButton
@@ -30,9 +30,9 @@ export default {
     AppButton,
   },
   methods: {
-    onClick() {
+    logout: function() {
       console.log("logged out");
-      this.$router.push("/home");
+      this.$router.push("/");
     },
   },
 };

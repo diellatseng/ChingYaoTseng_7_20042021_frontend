@@ -1,7 +1,6 @@
 <template>
   <router-link
     class="button"
-    @click.native="$emit('onClick', $event)"
     :to="to"
     :class="[themes[theme], sizes[size], colors[color]]"
   >

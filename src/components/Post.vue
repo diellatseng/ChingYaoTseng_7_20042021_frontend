@@ -4,6 +4,7 @@
     <p class="post__date">{{ post.date }}</p>
     <p>{{ post.text }}</p>
     <p>Likes: {{ post.likes }}</p>
+    <p>Comments: {{ post.comments }}</p>
   </div>
 </template>
 
