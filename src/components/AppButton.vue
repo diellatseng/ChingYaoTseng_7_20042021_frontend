@@ -1,11 +1,9 @@
 <template>
-  <router-link 
+  <router-link
     class="button"
     @click.native="$emit('onClick', $event)"
     :to="to"
-    :class="[
-      themes[theme], sizes[size]
-    ]" 
+    :class="[themes[theme], sizes[size]]"
   >
     <slot></slot>
   </router-link>
@@ -16,45 +14,45 @@ export default {
   data() {
     return {
       themes: {
-        rounded: 'rounded'
+        rounded: "rounded",
       },
       sizes: {
-        normal: '',
-        small: 'small'
-      }
-    }
+        normal: "",
+        small: "small",
+      },
+    };
   },
 
   props: {
     theme: {
       required: false,
       type: String,
-      default: 'primary'
+      default: "primary",
     },
     size: {
       required: false,
       type: String,
-      default: 'normal'
+      default: "normal",
     },
     to: {
       required: false,
       type: Object,
       default() {
         return {
-          name: 'Home'
-        } 
-      }
-    }
-  }
+          name: "PostsWall",
+        };
+      },
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
 .button {
-  width:150px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: auto;
   padding: 1rem 2rem;
   border-radius: 5px;
@@ -78,8 +76,8 @@ export default {
 
 .small {
   width: auto;
-  padding-top: .3rem;
-  padding-bottom: .3rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
   font-size: 1.2rem;
 }
 </style>

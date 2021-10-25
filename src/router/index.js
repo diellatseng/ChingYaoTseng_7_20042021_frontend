@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import PostsWall from '../views/PostsWall.vue'
 import Home from '../views/Home.vue'
-import Welcome from '../views/Welcome.vue'
 import SignUp from '../views/SignUp.vue'
 import LogIn from '../views/LogIn.vue'
 import About from '../views/About.vue'
@@ -17,9 +17,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/welcome',
-    name: 'Welcome',
-    component: Welcome
+    path: '/postwall',
+    name: 'PostsWall',
+    component: PostsWall
   },
   {
     path: '/about',

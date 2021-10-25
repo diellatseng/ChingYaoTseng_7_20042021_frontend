@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <router-link to="/home">
+    <router-link to="/postswall">
       <img
         class="logo"
         alt="Groupmania logo"
