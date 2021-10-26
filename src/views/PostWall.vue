@@ -31,15 +31,25 @@ export default {
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet ornare neque, nec maximus enim porta ut. ",
         date: "October 24th at 21:14",
         likes: 5,
-        comments: 2
+        comments: 2,
+        usersLiked: ["Mary Jane", "Tony Smith", "Ray Marlin"]
       },
       {
         id: 2,
         name: "Mary Lane",
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris finibus auctor est, nec malesuada nunc facilisis vel. Morbi pretium odio elit, ut suscipit orci ullamcorper in.",
         date: "October 24th at 23:50",
+        likes: 2,
+        comments: 1,
+        usersLiked: ["Mary Jane", "Tony Smith"]
+      },
+      {
+        id: 3,
+        name: "Pocky Pie",
+        text: "Lorem ipsum auris finibus auctor est, nec malesuada nunc facilisis vel. Morbi pretium odio elit, ut suscipit orci ullamcorper in.",
+        date: "October 25th at 10:50",
         likes: 0,
-        comments: 1
+        comments: 0
       },
     ];
   },

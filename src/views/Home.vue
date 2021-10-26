@@ -10,7 +10,9 @@
       <div class="container">
         <!-- Log In Form -->
         <form
-          id="login-page"
+          id="login-form"
+          @submit.prevent="submitForm"
+          autocomplete="off"
           v-if="currentForm.toLowerCase() === 'login'"
           class="login-form"
         >
@@ -22,7 +24,7 @@
             <input type="text" name="password" placeholder="Your password" />
             <label for="password">Password</label>
           </div>
-          <AppButton :to="{ name: 'PostWall' }" theme="rounded" id="logIn"
+          <AppButton @click.native="submitForm" theme="rounded" id="logIn"
             >Log In</AppButton
           >
           <p class="message">
@@ -32,7 +34,7 @@
         </form>
 
         <!-- Register Form -->
-        <form v-else class="register-form">
+        <form v-else id="register-form">
           <div class="form-control">
             <input type="text" name="full-name" placeholder="Tony Stark" />
             <label for="full-name">Full Name</label>
@@ -46,8 +48,10 @@
             <label for="password">Password</label>
           </div>
           <AppButton @click.native="onClick" theme="rounded">Next</AppButton>
-          <p class="message">Already registered?
-          <a href="#" @click.prevent="toggleForm()">Log In</a></p>
+          <p class="message">
+            Already registered?
+            <a href="#" @click.prevent="toggleForm()">Log In</a>
+          </p>
         </form>
       </div>
     </div>
@@ -77,6 +81,9 @@ export default {
     },
     toggleForm() {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
+    },
+    submitForm() {
+      console.log("form submited");
     },
   },
 };
