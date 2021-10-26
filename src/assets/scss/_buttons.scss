@@ -1,0 +1,46 @@
+.button {
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 1rem 2rem;
+  border: 0;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: $color-primary;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: $color-primary-darken;
+  }
+
+  &:active {
+    background-color: $color-primary;
+  }
+}
+
+.rounded {
+  border-radius: 3rem;
+}
+
+.squared {
+  border-radius: 0;
+}
+
+.small {
+  width: auto;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.danger {
+  background-color: $color-danger;
+}

@@ -11,22 +11,31 @@
         <!-- Log In Form -->
         <form
           id="login-form"
-          @submit.prevent="submitForm"
+          @submit.prevent="submitLoginForm"
           autocomplete="off"
           v-if="currentForm.toLowerCase() === 'login'"
           class="login-form"
         >
           <div class="form-control">
-            <input type="text" name="email" placeholder="name@domain.com" />
             <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@domain.com"
+              required
+            />
           </div>
           <div class="form-control">
-            <input type="text" name="password" placeholder="Your password" />
             <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Your password"
+              required
+            />
           </div>
-          <AppButton @click.native="submitForm" theme="rounded" id="logIn"
-            >Log In</AppButton
-          >
+          <button class="button rounded">Log In</button>
           <p class="message">
             Not registered?
             <a href="#" @click.prevent="toggleForm()">Create an account</a>
@@ -34,20 +43,42 @@
         </form>
 
         <!-- Register Form -->
-        <form v-else id="register-form">
+        <form
+          v-else
+          id="register-form"
+          @submit.prevent="submitRegisterForm"
+          autocomplete="off"
+        >
           <div class="form-control">
-            <input type="text" name="full-name" placeholder="Tony Stark" />
             <label for="full-name">Full Name</label>
+            <input type="text" name="full-name" placeholder="Tony Stark" required/>
           </div>
           <div class="form-control">
-            <input type="text" name="email" placeholder="name@domain.com" />
             <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@domain.com"
+              required
+            />
           </div>
           <div class="form-control">
-            <input type="text" name="password" placeholder="Your password" />
             <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Your password"
+              minlength="8"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              required
+            />
+            <span class="password__hint"
+              >* Must contain at least 1 number and 1 uppercase and 1 lowercase
+              letter, and at least 8 or more characters.</span
+            >
           </div>
-          <AppButton @click.native="onClick" theme="rounded">Next</AppButton>
+          <button class="button rounded">Next</button>
           <p class="message">
             Already registered?
             <a href="#" @click.prevent="toggleForm()">Log In</a>
@@ -63,7 +94,6 @@
 </template>
 
 <script>
-import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "Home",
@@ -72,9 +102,6 @@ export default {
       currentForm: "login",
     };
   },
-  components: {
-    AppButton,
-  },
   methods: {
     onClick() {
       this.$router.push("/postwall"); //Add authorization
@@ -82,9 +109,12 @@ export default {
     toggleForm() {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
     },
-    submitForm() {
-      console.log("form submited");
+    submitLoginForm() {
+      console.log("logged in");
     },
+    submitRegisterForm() {
+      console.log("registered");
+    }
   },
 };
 </script>
@@ -112,6 +142,8 @@ body {
   padding: 20px;
 }
 
+/* The style for forms */
+
 .forms {
   width: 100%;
   margin: auto;
@@ -138,11 +170,11 @@ body {
 
   input {
     height: 50px;
-    margin: 5px;
     padding: 3px 10px;
     border: 3px solid $color-primary-lighten;
     border-radius: 5px;
     font-size: 1.2rem;
+    background-color: white;
 
     &:focus {
       border: 3px solid $color-primary-darken;
@@ -157,6 +189,12 @@ body {
     }
   }
 }
+
+.password__hint {
+  color: lighten(black, 40%);
+}
+
+/* Page background decoration */
 
 .container-image {
   position: relative;
