@@ -11,22 +11,37 @@
         <!-- Log In Form -->
         <form
           id="login-form"
-          @submit.prevent="submitForm"
+          @submit.prevent="submitLoginForm"
           autocomplete="off"
           v-if="currentForm.toLowerCase() === 'login'"
           class="login-form"
+          novalidate
         >
           <div class="form-control">
-            <input type="text" name="email" placeholder="name@domain.com" />
             <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@domain.com"
+              required
+            />
+            <span class="error" aria-live="polite"></span>
           </div>
           <div class="form-control">
-            <input type="text" name="password" placeholder="Your password" />
             <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Your password"
+              minlength="8"
+              maxlength="255"
+              pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])$"
+              required
+            />
+            <span class="error" aria-live="polite"></span>
           </div>
-          <AppButton @click.native="submitForm" theme="rounded" id="logIn"
-            >Log In</AppButton
-          >
+          <button class="button rounded">Log In</button>
           <p class="message">
             Not registered?
             <a href="#" @click.prevent="toggleForm()">Create an account</a>
@@ -40,7 +55,12 @@
             <label for="full-name">Full Name</label>
           </div>
           <div class="form-control">
-            <input type="text" name="email" placeholder="name@domain.com" />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@domain.com"
+            />
             <label for="email">Email</label>
           </div>
           <div class="form-control">
@@ -82,8 +102,40 @@ export default {
     toggleForm() {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
     },
-    submitForm() {
-      console.log("form submited");
+    submitLoginForm() {
+      const form = document.getElementById("login-form");
+      const email = document.getElementById("email");
+      const emailError = document.querySelector("#email + span.error");
+
+      email.addEventListener("input", function () {
+        if (email.validity.valid) {
+          emailError.textContent = "";
+          emailError.className = "error";
+          console.log("email validated");
+        } else {
+          console.log("email not validated");
+          showError();
+        }
+      });
+
+      form.addEventListener("submit", function (event) {
+        console.log(`Form submitted`); //put submit function here
+        if (!email.validity.valid) {
+          showError();
+          event.preventDefault();
+        }
+      });
+
+      function showError() {
+        const email = document.getElementById("email");
+        if (email.validity.valueMissing) {
+          emailError.textContent = "You need to enter an e-mail address.";
+        } else if (email.validity.typeMismatch) {
+          emailError.textContent =
+            "Entered value needs to be an e-mail address. For example: yourname@domain.com";
+        }
+        emailError.className = "error active";
+      }
     },
   },
 };
@@ -112,6 +164,8 @@ body {
   padding: 20px;
 }
 
+/* This is our style for the forms */
+
 .forms {
   width: 100%;
   margin: auto;
@@ -138,11 +192,11 @@ body {
 
   input {
     height: 50px;
-    margin: 5px;
     padding: 3px 10px;
     border: 3px solid $color-primary-lighten;
     border-radius: 5px;
     font-size: 1.2rem;
+    background-color: white;
 
     &:focus {
       border: 3px solid $color-primary-darken;
@@ -157,6 +211,33 @@ body {
     }
   }
 }
+
+/* This is our style for the invalid fields */
+
+input:focus:invalid {
+  border-color: white;
+}
+
+input:focus:required:invalid {
+  border-color: $color-danger;
+  background-color: lighten($color-danger-lighten, 25%);
+}
+
+/* This is the style of our error messages */
+
+.error {
+  width: 100%;
+  padding: 0;
+  font-size: 80%;
+  color: $color-danger-darken;
+  background-color: white;
+}
+
+.error.active {
+  padding: 0.3em;
+}
+
+/* Page background decoration */
 
 .container-image {
   position: relative;
