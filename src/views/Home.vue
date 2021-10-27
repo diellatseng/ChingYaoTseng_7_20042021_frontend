@@ -26,7 +26,6 @@
               placeholder="name@domain.com"
               required
             />
-            <span class="error" aria-live="polite"></span>
           </div>
           <div class="form-control">
             <label for="password">Password</label>
@@ -34,12 +33,8 @@
               type="password"
               name="password"
               placeholder="Your password"
-              minlength="8"
-              maxlength="255"
-              pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])$"
               required
             />
-            <span class="error" aria-live="polite"></span>
           </div>
           <button class="button rounded">Log In</button>
           <p class="message">
@@ -49,25 +44,42 @@
         </form>
 
         <!-- Register Form -->
-        <form v-else id="register-form">
+        <form
+          v-else
+          id="register-form"
+          @submit.prevent="submitRegisterForm"
+          autocomplete="off"
+        >
           <div class="form-control">
-            <input type="text" name="full-name" placeholder="Tony Stark" />
             <label for="full-name">Full Name</label>
+            <input type="text" name="full-name" placeholder="Tony Stark" required/>
           </div>
           <div class="form-control">
+            <label for="email">Email</label>
             <input
               type="email"
               id="email"
               name="email"
               placeholder="name@domain.com"
+              required
             />
-            <label for="email">Email</label>
           </div>
           <div class="form-control">
-            <input type="text" name="password" placeholder="Your password" />
             <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Your password"
+              minlength="8"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              required
+            />
+            <span class="password__hint"
+              >* Must contain at least 1 number and 1 uppercase and 1 lowercase
+              letter, and at least 8 or more characters.</span
+            >
           </div>
-          <AppButton @click.native="onClick" theme="rounded">Next</AppButton>
+          <button class="button rounded">Next</button>
           <p class="message">
             Already registered?
             <a href="#" @click.prevent="toggleForm()">Log In</a>
@@ -83,7 +95,6 @@
 </template>
 
 <script>
-import AppButton from "@/components/AppButton.vue";
 
 export default {
   name: "Home",
@@ -91,9 +102,6 @@ export default {
     return {
       currentForm: "login",
     };
-  },
-  components: {
-    AppButton,
   },
   methods: {
     onClick() {
@@ -103,40 +111,11 @@ export default {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
     },
     submitLoginForm() {
-      const form = document.getElementById("login-form");
-      const email = document.getElementById("email");
-      const emailError = document.querySelector("#email + span.error");
-
-      email.addEventListener("input", function () {
-        if (email.validity.valid) {
-          emailError.textContent = "";
-          emailError.className = "error";
-          console.log("email validated");
-        } else {
-          console.log("email not validated");
-          showError();
-        }
-      });
-
-      form.addEventListener("submit", function (event) {
-        console.log(`Form submitted`); //put submit function here
-        if (!email.validity.valid) {
-          showError();
-          event.preventDefault();
-        }
-      });
-
-      function showError() {
-        const email = document.getElementById("email");
-        if (email.validity.valueMissing) {
-          emailError.textContent = "You need to enter an e-mail address.";
-        } else if (email.validity.typeMismatch) {
-          emailError.textContent =
-            "Entered value needs to be an e-mail address. For example: yourname@domain.com";
-        }
-        emailError.className = "error active";
-      }
+      console.log("logged in");
     },
+    submitRegisterForm() {
+      console.log("registered");
+    }
   },
 };
 </script>
@@ -164,7 +143,7 @@ body {
   padding: 20px;
 }
 
-/* This is our style for the forms */
+/* The style for forms */
 
 .forms {
   width: 100%;
@@ -212,29 +191,8 @@ body {
   }
 }
 
-/* This is our style for the invalid fields */
-
-input:focus:invalid {
-  border-color: white;
-}
-
-input:focus:required:invalid {
-  border-color: $color-danger;
-  background-color: lighten($color-danger-lighten, 25%);
-}
-
-/* This is the style of our error messages */
-
-.error {
-  width: 100%;
-  padding: 0;
-  font-size: 80%;
-  color: $color-danger-darken;
-  background-color: white;
-}
-
-.error.active {
-  padding: 0.3em;
+.password__hint {
+  color: lighten(black, 40%);
 }
 
 /* Page background decoration */
