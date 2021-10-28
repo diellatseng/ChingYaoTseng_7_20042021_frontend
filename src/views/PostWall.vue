@@ -33,6 +33,7 @@ export default {
       .get('http://localhost:3000/api/post')
       .then(response => {
         this.posts = response.data
+        console.log(this.posts)
       })
       .catch (error => {
         console.log(error.response)

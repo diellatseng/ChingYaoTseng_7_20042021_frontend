@@ -35,7 +35,7 @@
               required
             />
           </div>
-          <button class="button rounded">Log In</button>
+          <button type="submit" class="button rounded">Log In</button>
           <p class="message">
             Not registered?
             <a href="#" @click.prevent="toggleForm()">Create an account</a>
@@ -51,11 +51,12 @@
         >
           <div class="form-control">
             <label for="full-name">Full Name</label>
-            <input type="text" name="full-name" placeholder="Tony Stark" required/>
+            <input v-model="data.full_name" type="text" name="full-name" placeholder="Tony Stark" required/>
           </div>
           <div class="form-control">
             <label for="email">Email</label>
             <input
+              v-model="data.email"
               type="email"
               id="email"
               name="email"
@@ -66,6 +67,7 @@
           <div class="form-control">
             <label for="password">Password</label>
             <input
+              v-model="data.password"
               type="password"
               name="password"
               placeholder="Your password"
@@ -78,7 +80,7 @@
               letter, and at least 8 or more characters.</span
             >
           </div>
-          <button class="button rounded">Next</button>
+          <button type="submit" class="button rounded">Next</button>
           <p class="message">
             Already registered?
             <a href="#" @click.prevent="toggleForm()">Log In</a>
@@ -95,11 +97,19 @@
 
 <script>
 
+import axios from "axios"
+
 export default {
   name: "Home",
   data() {
     return {
       currentForm: "login",
+      data:{
+        full_name:'',
+        email:'',
+        password:''
+      },
+      dataInString: ""
     };
   },
   methods: {
@@ -113,7 +123,17 @@ export default {
       console.log("logged in");
     },
     submitRegisterForm() {
-      console.log("registered");
+      this.dataInString = JSON.stringify(this.data);
+      axios.post('http://localhost:3000/api/user/signup', this.dataInString, {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8;application/json'})
+            .then(response => {
+                let register = JSON.parse(response.data);
+                console.log(register);
+                console.log('registered')
+            })
+            .catch(error => {
+                console.log(error);
+                });
+      // console.log(this.userDataString);
     }
   },
 };
