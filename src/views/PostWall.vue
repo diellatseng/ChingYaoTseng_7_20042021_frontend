@@ -11,6 +11,12 @@ import TheHeader from "@/components/TheHeader.vue";
 import PostNew from "@/components/PostNew.vue";
 import Posts from "@/components/Posts.vue";
 
+import Vue from 'vue';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+
+Vue.use(VueAxios, axios);
+
 export default {
   components: {
     TheHeader,
@@ -23,35 +29,14 @@ export default {
     };
   },
   created() {
-    this.posts = [
-      //Should use API to fetch data
-      {
-        id: 1,
-        name: "John Smith",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet ornare neque, nec maximus enim porta ut. ",
-        date: "October 24th at 21:14",
-        likes: 5,
-        comments: 2,
-        usersLiked: ["Mary Jane", "Tony Smith", "Ray Marlin"]
-      },
-      {
-        id: 2,
-        name: "Mary Lane",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris finibus auctor est, nec malesuada nunc facilisis vel. Morbi pretium odio elit, ut suscipit orci ullamcorper in.",
-        date: "October 24th at 23:50",
-        likes: 2,
-        comments: 1,
-        usersLiked: ["Mary Jane", "Tony Smith"]
-      },
-      {
-        id: 3,
-        name: "Pocky Pie",
-        text: "Lorem ipsum auris finibus auctor est, nec malesuada nunc facilisis vel. Morbi pretium odio elit, ut suscipit orci ullamcorper in.",
-        date: "October 25th at 10:50",
-        likes: 0,
-        comments: 0
-      },
-    ];
+    axios
+      .get('http://localhost:3000/api/post')
+      .then(response => {
+        this.posts = response.data
+      })
+      .catch (error => {
+        console.log(error.response)
+      })
   },
 };
 </script>
