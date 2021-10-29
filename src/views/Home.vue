@@ -108,8 +108,7 @@ export default {
         full_name:'',
         email:'',
         password:''
-      },
-      dataInString: ""
+      }
     };
   },
   methods: {
@@ -120,20 +119,30 @@ export default {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
     },
     submitLoginForm() {
-      console.log("logged in");
+      axios.post('http://localhost:3000/api/user/login', this.data, {headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;application/json'}})
+        .then(response => {
+          let log = JSON.parse(response.data);
+          localStorage.userId = log.userId;
+          localStorage.token = log.token;
+          localStorage.moderation = log.moderation;
+          this.$router.push('/postwall');  
+        })
+        .catch(error => {
+          console.log(error);
+          this.message = error;
+          this.msg = true 
+        }); 
     },
     submitRegisterForm() {
-      this.dataInString = JSON.stringify(this.data);
-      axios.post('http://localhost:3000/api/user/signup', this.dataInString, {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8;application/json'})
-            .then(response => {
-                let register = JSON.parse(response.data);
-                console.log(register);
-                console.log('registered')
-            })
-            .catch(error => {
-                console.log(error);
-                });
-      // console.log(this.userDataString);
+      axios.post('http://localhost:3000/api/user/signup', this.data, {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8;application/json'})
+        .then(response => {
+          let register = JSON.parse(response.data);
+          this.$router.push('/postwall');
+          console.log(register);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
 };
