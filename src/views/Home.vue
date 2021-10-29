@@ -19,6 +19,7 @@
           <div class="form-control">
             <label for="email">Email</label>
             <input
+              v-model="dataLogin.email"
               type="email"
               id="email"
               name="email"
@@ -29,6 +30,7 @@
           <div class="form-control">
             <label for="password">Password</label>
             <input
+              v-model="dataLogin.password"
               type="password"
               name="password"
               placeholder="Your password"
@@ -51,12 +53,12 @@
         >
           <div class="form-control">
             <label for="full-name">Full Name</label>
-            <input v-model="data.full_name" type="text" name="full-name" placeholder="Tony Stark" required/>
+            <input v-model="dataResgister.full_name" type="text" name="full-name" placeholder="Tony Stark" required/>
           </div>
           <div class="form-control">
             <label for="email">Email</label>
             <input
-              v-model="data.email"
+              v-model="dataResgister.email"
               type="email"
               id="email"
               name="email"
@@ -67,7 +69,7 @@
           <div class="form-control">
             <label for="password">Password</label>
             <input
-              v-model="data.password"
+              v-model="dataResgister.password"
               type="password"
               name="password"
               placeholder="Your password"
@@ -104,8 +106,12 @@ export default {
   data() {
     return {
       currentForm: "login",
-      data:{
+      dataResgister:{
         full_name:'',
+        email:'',
+        password:''
+      },
+      dataLogin:{
         email:'',
         password:''
       }
@@ -119,12 +125,14 @@ export default {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
     },
     submitLoginForm() {
-      axios.post('http://localhost:3000/api/user/login', this.data, {headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;application/json'}})
+      console.log('before sending via axios');
+      console.log(this.dataLogin);
+      axios.post('http://localhost:3000/api/user/login', this.dataLogin)
         .then(response => {
           let log = JSON.parse(response.data);
           localStorage.userId = log.userId;
           localStorage.token = log.token;
-          localStorage.moderation = log.moderation;
+          console.log(log);
           this.$router.push('/postwall');  
         })
         .catch(error => {
@@ -134,7 +142,8 @@ export default {
         }); 
     },
     submitRegisterForm() {
-      axios.post('http://localhost:3000/api/user/signup', this.data, {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8;application/json'})
+      console.log(this.dataResgister);
+      axios.post('http://localhost:3000/api/user/signup', this.dataResgister, {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8;application/json'})
         .then(response => {
           let register = JSON.parse(response.data);
           this.$router.push('/postwall');
