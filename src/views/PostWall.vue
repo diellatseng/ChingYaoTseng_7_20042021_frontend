@@ -30,7 +30,7 @@ export default {
   },
   created() {
     axios
-      .get('http://localhost:3000/api/post')
+      .get('http://localhost:3000/api/post', {headers: {Authorization: 'Bearer ' + localStorage.token}})
       .then(response => {
         this.posts = response.data
         console.log(this.posts)
