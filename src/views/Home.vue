@@ -11,7 +11,7 @@
         <!-- Log In Form -->
         <form
           id="login-form"
-          @submit.prevent="submitLoginForm"
+          @submit.prevent="login"
           autocomplete="off"
           v-if="currentForm.toLowerCase() === 'login'"
           class="login-form"
@@ -48,12 +48,18 @@
         <form
           v-else
           id="register-form"
-          @submit.prevent="submitRegisterForm"
+          @submit.prevent="register"
           autocomplete="off"
         >
           <div class="form-control">
             <label for="full-name">Full Name</label>
-            <input v-model="dataResgister.full_name" type="text" name="full-name" placeholder="Tony Stark" required/>
+            <input
+              v-model="dataResgister.full_name"
+              type="text"
+              name="full-name"
+              placeholder="Tony Stark"
+              required
+            />
           </div>
           <div class="form-control">
             <label for="email">Email</label>
@@ -98,23 +104,22 @@
 </template>
 
 <script>
-
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "Home",
   data() {
     return {
       currentForm: "login",
-      dataResgister:{
-        full_name:'',
-        email:'',
-        password:''
+      dataResgister: {
+        full_name: "",
+        email: "",
+        password: "",
       },
-      dataLogin:{
-        email:'',
-        password:''
-      }
+      dataLogin: {
+        email: "",
+        password: "",
+      },
     };
   },
   methods: {
@@ -124,35 +129,37 @@ export default {
     toggleForm() {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
     },
-    submitLoginForm() {
-      console.log('before sending via axios');
+    login() {
+      console.log("before sending via axios");
       console.log(this.dataLogin);
-      axios.post('http://localhost:3000/api/user/login', this.dataLogin)
-        .then(response => {
+      axios
+        .post("http://localhost:3000/api/user/login", this.dataLogin)
+        .then((response) => {
           let log = JSON.parse(response.data);
           localStorage.userId = log.userId;
           localStorage.token = log.token;
           console.log(log);
-          this.$router.push('/postwall');  
+          this.$router.push("/postwall");
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
           this.message = error;
-          this.msg = true 
-        }); 
+          this.msg = true;
+        });
     },
-    submitRegisterForm() {
+    register() {
       console.log(this.dataResgister);
-      axios.post('http://localhost:3000/api/user/signup', this.dataResgister, {'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8;application/json'})
-        .then(response => {
+      axios
+        .post("http://localhost:3000/api/user/register", this.dataResgister)
+        .then((response) => {
           let register = JSON.parse(response.data);
-          this.$router.push('/postwall');
+          this.$router.push("/postwall");
           console.log(register);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-    }
+    },
   },
 };
 </script>
