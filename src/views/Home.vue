@@ -145,8 +145,9 @@ export default {
         .post("http://localhost:3000/api/user/register", this.dataResgister)
         .then((response) => {
           let register = JSON.parse(response.data);
+          alert('Your account has been created!');
           console.log(register);
-          this.$router.push("/postwall");
+          this.toggleForm();
         })
         .catch((error) => {
           console.log(error);
