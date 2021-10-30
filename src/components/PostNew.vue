@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form @submit.prevent>
+    <form @submit.prevent enctype="multipart/form-data">
       <div class="form-control">
         <label for="post"><slot name="title">Write a new post...</slot></label>
         <textarea v-model="dataPost.content" name="post" rows="4" cols="25" placeholder="Say something..." required/>
@@ -28,23 +28,30 @@ export default {
     return {
       dataPost: {
         content: '',
-        author_id: ''
+        author_id: '',
+        img_url: []
       },
       dataPostString: "",
     }
   },
   
-
   methods: {
+    uploadImage(event) {
+      this.dataPost.img_url = event.target.files[0];
+      console.log(this.dataPost);
+    },
+
     createPost() {
       // this.dataPostString = JSON.stringify(this.dataPost);
       if (localStorage.userId) {
         this.dataPost.author_id = localStorage.userId;
-        console.log(this.dataPost.author_id);
-        console.log(this.dataPost)
       }
-
-      axios.post("http://localhost:3000/api/post", this.dataPost)
+      const headers = {
+      'Content-Type': 'application/json',
+}
+      axios.post("http://localhost:3000/api/post", this.dataPost, {
+        headers: headers
+      })
         .then(response => {
           let res = JSON.parse(response.data);
             alert("Your post has been created!");
@@ -55,30 +62,6 @@ export default {
           console.log(error.toJSON());
       })
     },
-
-    uploadImage(event) {
-      const URL = 'http://localhost:3000/api/post'; 
-
-      let data = new FormData();
-      data.append('name', 'my-picture');
-      data.append('file', event.target.files[0]); 
-
-      let config = {
-        header : {
-          'Content-Type' : 'image/png'
-        }
-      }
-
-      axios.put(
-        URL, 
-        data,
-        config
-      ).then(
-        response => {
-          console.log('image upload response > ', response)
-        }
-      )
-    }
   }
 };
 </script>
