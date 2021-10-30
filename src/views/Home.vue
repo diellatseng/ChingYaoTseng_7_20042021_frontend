@@ -123,14 +123,11 @@ export default {
     };
   },
   methods: {
-    onClick() {
-      this.$router.push("/postwall"); //Add authorization
-    },
     toggleForm() {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
     },
     login() {
-      console.log("before sending via axios");
+      console.log("front: before sending via axios");
       console.log(this.dataLogin);
       axios
         .post("http://localhost:3000/api/user/login", this.dataLogin)
@@ -138,7 +135,7 @@ export default {
           let log = JSON.parse(response.data);
           localStorage.userId = log.userId;
           localStorage.token = log.token;
-          console.log(log);
+          console.log('frontend res: ' + log);
           this.$router.push("/postwall");
         })
         .catch((error) => {

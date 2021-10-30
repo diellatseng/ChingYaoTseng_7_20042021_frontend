@@ -8,7 +8,7 @@
         </div>
         <div class="profile__content">
           <p>Change Profile Image</p>
-          <h2>Mary Jane</h2>
+          <h2>User Full name</h2>
         </div>
       </div>
       <AppButton @click.native="logout" theme="rounded">Log Out</AppButton>
@@ -23,17 +23,40 @@
 import TheHeader from "@/components/TheHeader.vue";
 import AppButton from "@/components/AppButton.vue";
 
+import Vue from 'vue';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+
+Vue.use(VueAxios, axios);
+
 export default {
   name: "Profile",
   components: {
     TheHeader,
     AppButton,
   },
+
+  props: {
+    user: Object
+  },
+
   methods: {
     logout: function() {
       console.log("logged out");
       this.$router.push("/");
     },
+  },
+
+  created() {
+    axios
+      .get('http://localhost:3000/api/user/', {headers: {Authorization: 'Bearer ' + localStorage.token}})
+      .then(response => {
+        this.user = response.data;
+        console.log('frontend: this.user ->' + this.user);
+      })
+      .catch (error => {
+        console.log(error.response);
+      })
   },
 };
 </script>
