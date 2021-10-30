@@ -127,21 +127,16 @@ export default {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
     },
     login() {
-      console.log("front: before sending via axios");
-      console.log(this.dataLogin);
       axios
         .post("http://localhost:3000/api/user/login", this.dataLogin)
         .then((response) => {
           let log = JSON.parse(response.data);
           localStorage.userId = log.userId;
           localStorage.token = log.token;
-          console.log('frontend res: ' + log);
           this.$router.push("/postwall");
         })
         .catch((error) => {
           console.log(error);
-          this.message = error;
-          this.msg = true;
         });
     },
     register() {
@@ -150,8 +145,8 @@ export default {
         .post("http://localhost:3000/api/user/register", this.dataResgister)
         .then((response) => {
           let register = JSON.parse(response.data);
-          this.$router.push("/postwall");
           console.log(register);
+          this.$router.push("/postwall");
         })
         .catch((error) => {
           console.log(error);
