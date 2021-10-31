@@ -8,12 +8,12 @@
         </div>
         <div class="profile__content">
           <p>Change Profile Image</p>
-          <h2> {{user.full_name}} </h2>
+          <h2>Hello {{user.full_name}} </h2>
         </div>
       </div>
       <AppButton @click.native="logout" theme="rounded">Log Out</AppButton>
     </div>
-    <AppButton theme="squared" size="small" color="danger" id="btnDelete"
+    <AppButton @click.native="deleteUser" theme="squared" size="small" color="danger" id="btnDelete"
       >Delete Account</AppButton
     >
   </div>
@@ -50,21 +50,19 @@ export default {
     logout: function() {
       localStorage.clear();
       console.log("logged out");
+      alert('You have logged out.');
       this.$router.push("/");
     },
 
-    deleteUser() {
-      axios.delete("http://localhost:3000/api/auth/", {headers: {Authorization: 'Bearer ' + localStorage.token}})
+    deleteUser: function() {
+      axios.delete("http://localhost:3000/api/user/", {headers: {Authorization: 'Bearer ' + localStorage.token}})
       .then(response => {
-          let rep = JSON.parse(response.data);
-          console.log(rep);
-          localStorage.userId = "";
-          localStorage.token = "";
-          this.$router.push('/');  
+        localStorage.clear();
+        alert(response.data.message);
+        this.$router.push('/');  
       })
       .catch(error => {
           console.log(error);
-          this.msg = error  
       })
 },
   },
