@@ -8,7 +8,7 @@
         </div>
         <div class="profile__content">
           <p>Change Profile Image</p>
-          <h2>User Full name</h2>
+          <h2> {{user.full_name}} </h2>
         </div>
       </div>
       <AppButton @click.native="logout" theme="rounded">Log Out</AppButton>
@@ -36,25 +36,48 @@ export default {
     AppButton,
   },
 
-  props: {
-    user: Object
+  data() {
+    return {
+      user: {
+        full_name: '',
+        email: '',
+        img_url: ''
+      }
+    }
   },
 
   methods: {
     logout: function() {
+      localStorage.clear();
       console.log("logged out");
       this.$router.push("/");
     },
+
+    deleteUser() {
+      axios.delete("http://localhost:3000/api/auth/", {headers: {Authorization: 'Bearer ' + localStorage.token}})
+      .then(response => {
+          let rep = JSON.parse(response.data);
+          console.log(rep);
+          localStorage.userId = "";
+          localStorage.token = "";
+          this.$router.push('/');  
+      })
+      .catch(error => {
+          console.log(error);
+          this.msg = error  
+      })
+},
   },
 
-  created() {
+  beforeCreate() {
     axios
       .get('http://localhost:3000/api/user/', {headers: {Authorization: 'Bearer ' + localStorage.token}})
       .then(response => {
         this.user = response.data;
-        console.log('frontend: this.user ->' + this.user);
+        console.log(this.user);
       })
       .catch (error => {
+        alert ('You are not loggin in!')
         console.log(error.response);
       })
   },
