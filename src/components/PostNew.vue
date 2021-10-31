@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form @submit.prevent enctype="multipart/form-data">
+    <form @submit.prevent method="post" enctype="multipart/form-data">
       <div class="form-control">
         <label for="post"><slot name="title">Write a new post...</slot></label>
         <textarea v-model="dataPost.content" name="post" rows="4" cols="25" placeholder="Say something..." required/>
@@ -31,7 +31,6 @@ export default {
         author_id: '',
         img_url: []
       },
-      dataPostString: "",
     }
   },
   
@@ -42,28 +41,47 @@ export default {
     },
 
     createPost() {
+      let headers = {
+        "Content-Type" : 'application/json',
+        "Authorization" : ''
+      };
       // this.dataPostString = JSON.stringify(this.dataPost);
       if (localStorage.userId) {
         this.dataPost.author_id = localStorage.userId;
+        headers.Authorization = 'Bearer ' + localStorage.token;
       }
-      const headers = {
-      'Content-Type': 'application/json',
-}
-      axios.post("http://localhost:3000/api/post", this.dataPost, {
-        headers: headers
-      })
+
+      // if (this.dataPost.img_url) {
+      //   headers[Content-Type] = 'multipart/form-data';
+      // } else {
+      //   headers[Content-Type] = 'application/json';
+      // }
+      console.log('send from VUE, headers:' + JSON.stringify(headers));
+
+
+      // const formData = new FormData();
+
+      // formData.append("content", this.dataPost.content);
+      // formData.append("author_id", this.dataPost.author_id);
+      // formData.append("img_url", this.dataPost.img_url);
+      // console.log('From VUE, fromData: ' + formData);
+
+      console.log('dataPost' + JSON.stringify(this.dataPost));
+
+      axios.post("http://localhost:3000/api/post", this.dataPost, { headers })
         .then(response => {
           let res = JSON.parse(response.data);
             alert("Your post has been created!");
             this.dataPost.content = "";
           console.log(res)
         })
-         .catch(function (error) {
+        .catch(function (error) {
           console.log(error.toJSON());
       })
-    },
-  }
-};
+    }
+  },
+}
+
 </script>
 
 <style scoped lang="scss">
