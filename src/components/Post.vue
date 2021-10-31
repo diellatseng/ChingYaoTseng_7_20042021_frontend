@@ -1,16 +1,16 @@
 <template>
   <div class="container">
-    <h3 class="post__name">{{ post.name }}</h3>
-    <p class="post__date">{{ post.date }}</p>
-    <p>{{ post.text }}</p>
+    <h3 class="post__name">{{ post.author.full_name }}</h3>
+    <p class="post__date">{{ post.created_at }}</p>
+    <p>{{ post.content }}</p>
     <div class="actions">
       <div class="actions__like">
         <font-awesome-icon icon="fa-solid fa-heart" />
         <font-awesome-icon icon="fa-regular fa-heart" /> 
-        {{ post.likes }}
+        {{ post._count.likes }}
       </div>
-      <div v-if="post.comments > 0" class="actions__comment">{{ post.comments }}
-        <span v-if="post.comments == 1">comment</span>
+      <div v-if="post._count.comments > 0" class="actions__comment">{{ post._count.comments }}
+        <span v-if="post._count.comments == 1">comment</span>
         <span v-else>comments</span>
       </div>
     </div>

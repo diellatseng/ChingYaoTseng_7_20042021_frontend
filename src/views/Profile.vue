@@ -8,12 +8,12 @@
         </div>
         <div class="profile__content">
           <p>Change Profile Image</p>
-          <h2>Mary Jane</h2>
+          <h2>Hello {{user.full_name}} </h2>
         </div>
       </div>
       <AppButton @click.native="logout" theme="rounded">Log Out</AppButton>
     </div>
-    <AppButton theme="squared" size="small" color="danger" id="btnDelete"
+    <AppButton @click.native="deleteUser" theme="squared" size="small" color="danger" id="btnDelete"
       >Delete Account</AppButton
     >
   </div>
@@ -23,17 +23,61 @@
 import TheHeader from "@/components/TheHeader.vue";
 import AppButton from "@/components/AppButton.vue";
 
+import Vue from 'vue';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+
+Vue.use(VueAxios, axios);
+
 export default {
   name: "Profile",
   components: {
     TheHeader,
     AppButton,
   },
+
+  data() {
+    return {
+      user: {
+        full_name: '',
+        email: '',
+        img_url: ''
+      }
+    }
+  },
+
   methods: {
     logout: function() {
+      localStorage.clear();
       console.log("logged out");
+      alert('You have logged out.');
       this.$router.push("/");
     },
+
+    deleteUser: function() {
+      axios.delete("http://localhost:3000/api/user/", {headers: {Authorization: 'Bearer ' + localStorage.token}})
+      .then(response => {
+        localStorage.clear();
+        alert(response.data.message);
+        this.$router.push('/');  
+      })
+      .catch(error => {
+          console.log(error);
+      })
+},
+  },
+
+  beforeCreate() {
+    axios
+      .get('http://localhost:3000/api/user/', {headers: {Authorization: 'Bearer ' + localStorage.token}})
+      .then(response => {
+        this.user = response.data;
+        console.log(this.user);
+      })
+      .catch (error => {
+        alert ('You are not loggin in!')
+        console.log(error.response);
+      })
   },
 };
 </script>

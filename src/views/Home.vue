@@ -11,7 +11,7 @@
         <!-- Log In Form -->
         <form
           id="login-form"
-          @submit.prevent="submitLoginForm"
+          @submit.prevent="login"
           autocomplete="off"
           v-if="currentForm.toLowerCase() === 'login'"
           class="login-form"
@@ -20,6 +20,7 @@
           <div class="form-control">
             <label for="email">Email</label>
             <input
+              v-model="dataLogin.email"
               type="email"
               id="email"
               name="email"
@@ -30,13 +31,14 @@
           <div class="form-control">
             <label for="password">Password</label>
             <input
+              v-model="dataLogin.password"
               type="password"
               name="password"
               placeholder="Your password"
               required
             />
           </div>
-          <button class="button rounded">Log In</button>
+          <button type="submit" class="button rounded">Log In</button>
           <p class="message">
             Not registered?
             <a href="#" @click.prevent="toggleForm()">Create an account</a>
@@ -47,16 +49,23 @@
         <form
           v-else
           id="register-form"
-          @submit.prevent="submitRegisterForm"
+          @submit.prevent="register"
           autocomplete="off"
         >
           <div class="form-control">
             <label for="full-name">Full Name</label>
-            <input type="text" name="full-name" placeholder="Tony Stark" required/>
+            <input
+              v-model="dataResgister.full_name"
+              type="text"
+              name="full-name"
+              placeholder="Tony Stark"
+              required
+            />
           </div>
           <div class="form-control">
             <label for="email">Email</label>
             <input
+              v-model="dataResgister.email"
               type="email"
               id="email"
               name="email"
@@ -67,6 +76,7 @@
           <div class="form-control">
             <label for="password">Password</label>
             <input
+              v-model="dataResgister.password"
               type="password"
               name="password"
               placeholder="Your password"
@@ -79,7 +89,7 @@
               letter, and at least 8 or more characters.</span
             >
           </div>
-          <button class="button rounded">Next</button>
+          <button type="submit" class="button rounded">Next</button>
           <p class="message">
             Already registered?
             <a href="#" @click.prevent="toggleForm()">Log In</a>
@@ -95,27 +105,55 @@
 </template>
 
 <script>
+import axios from "axios";
 
 export default {
   name: "Home",
   data() {
     return {
       currentForm: "login",
+      dataResgister: {
+        full_name: "",
+        email: "",
+        password: "",
+      },
+      dataLogin: {
+        email: "",
+        password: "",
+      },
     };
   },
   methods: {
-    onClick() {
-      this.$router.push("/postwall"); //Add authorization
-    },
     toggleForm() {
       this.currentForm = this.currentForm === "login" ? "register" : "login";
     },
-    submitLoginForm() {
-      console.log("logged in");
+    login() {
+      axios
+        .post("http://localhost:3000/api/user/login", this.dataLogin)
+        .then((response) => {
+          let log = JSON.parse(response.data);
+          localStorage.userId = log.userId;
+          localStorage.token = log.token;
+          this.$router.push("/postwall");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    submitRegisterForm() {
-      console.log("registered");
-    }
+    register() {
+      console.log(this.dataResgister);
+      axios
+        .post("http://localhost:3000/api/user/register", this.dataResgister)
+        .then((response) => {
+          let register = JSON.parse(response.data);
+          alert('Your account has been created!');
+          console.log(register);
+          this.toggleForm();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
