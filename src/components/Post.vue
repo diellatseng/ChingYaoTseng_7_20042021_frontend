@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <h3 class="post__name">{{ post.author.full_name }}</h3>
-    <p class="post__date">{{ post.created_at }}</p>
+    <p class="post__date">{{ post.created_at | dateParse('YYYY.MM.DD HH:mm:ss') | dateFormat('DD MMM HH:mm')}}</p>
+
     <p>{{ post.content }}</p>
     <div class="actions">
       <div class="actions__like">
@@ -10,12 +11,13 @@
         {{ post._count.likes }}
       </div>
 
-      <a href="#" @click="seen = !seen">
-        <div v-if="post._count.comments > 0" class="actions__comment">{{ post._count.comments }}
+      <div v-if="post._count.comments > 0" class="actions__comment">
+        <button @click="seen = !seen">
+          {{ post._count.comments }}
           <span v-if="post._count.comments == 1">comment</span>
           <span v-else>comments</span>
-        </div>
-      </a>
+        </button>
+      </div>
     </div>
 
     <!-- <p>{{ likes }}</p> -->
@@ -24,8 +26,7 @@
       <div :key="comment.id" v-for="comment in post.comments" >
         <div class="comment">
             <p class="comment__content">{{ comment.content }}</p>
-            <h4 class="comment__author">By {{ comment.author_id }} (User ID)</h4>
-            <!-- <p class="comment_date">Commented at: {{ comment.created_at }}</p> -->
+            <h4 class="comment__author">By {{ comment.author.full_name }} (User ID)</h4>
         </div>
       </div>
     </div>
@@ -34,6 +35,13 @@
 </template>
 
 <script>
+
+import Vue from 'vue';
+import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
+import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
+
+Vue.use(VueFilterDateParse);
+Vue.use(VueFilterDateFormat);
 
 export default {
   name: "Post",

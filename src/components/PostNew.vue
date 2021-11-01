@@ -73,8 +73,10 @@ export default {
           let res = JSON.parse(response.data);
             alert("Your post has been created!");
             this.dataPost.content = "";
-          console.log(res)
+            console.log(res)
+            // return res.postId
         })
+        // .then pass postId -> check image -> send 2em request to updatePost
         .catch(function (error) {
           console.log(error.toJSON());
       })
