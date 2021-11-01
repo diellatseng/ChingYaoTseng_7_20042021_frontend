@@ -1,25 +1,39 @@
 <template>
   <div class="container">
+    <!-- Post header-->
     <div class="header">
       <div>
         <h3 class="header__name">{{ post.author.full_name }}</h3>
         <p class="header__date">{{ post.created_at | dateParse('YYYY.MM.DD HH:mm:ss') | dateFormat('DD MMM HH:mm')}}</p>
       </div>
+      
+      <!-- Post options-->
       <div>
-        <button class="options">
-          <font-awesome-icon icon="fa-solid fa-ellipsis" class="icon" />
-        </button>
+        <div>
+          <!-- Button Delete -->
+          <button v-if="post.author_id == this.userId" class="btn btn__delete">
+            <font-awesome-icon icon="fa-regular fa-trash-can" size="lg"/>
+          </button>
+          <!-- Button Edit -->
+          <button v-if="post.author_id == this.userId" class="btn btn__edit">
+            <font-awesome-icon icon="fa-solid fa-pen-to-square" size="lg"/>
+          </button>
+        </div>
       </div>
+
     </div>
 
+    <!-- Post content -->
     <p class="content">{{ post.content }}</p>
+
     <div class="actions">
+      <!-- Like button -->
       <div class="actions__like">
         <font-awesome-icon icon="fa-solid fa-heart" />
         <font-awesome-icon icon="fa-regular fa-heart" /> 
         {{ post._count.likes }}
       </div>
-
+      <!-- Comment counts -->
       <div v-if="post._count.comments > 0">
         <button @click="seen = !seen" class="actions__comment">
           {{ post._count.comments }}
@@ -31,6 +45,7 @@
 
     <!-- <p>{{ likes }}</p> -->
 
+    <!-- Comments -->
     <div v-show="seen" class="comments">
       <div :key="comment.id" v-for="comment in post.comments" >
         <div class="comment">
@@ -64,13 +79,16 @@ export default {
   data(){
     return {
       seen: false,
-      userID: '',
+      userId: '',
       likes: this.post.likes
     }
   },
-  beforeCreate() {
-    this.userID = localStorage.userID;
+  mounted() {
+    this.userId = localStorage.userId;
   },
+  methods: {
+    
+  }
 };
 </script>
 
@@ -151,9 +169,21 @@ export default {
   }
 }
 
-.options {
+.btn {
+  padding: 10px;
   background: none;
-  border: 0;
+  border-radius: 5px;
+
+    &__edit {
+      border: 0px solid $color-primary;
+    }
+
+  &__delete {
+    margin-right: 1rem;
+    border: 0px solid $color-danger;
+    background-color: $color-danger-darken;
+    color: white;
+  }
 }
 
 </style>
