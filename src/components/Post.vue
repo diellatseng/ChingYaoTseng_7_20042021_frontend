@@ -79,7 +79,6 @@ export default {
 
   &__date {
     margin-top: 0;
-    color: darken($color-fade-darken, 20%);
   }
 }
 
