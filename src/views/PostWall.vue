@@ -28,7 +28,7 @@ export default {
       posts: [],
     };
   },
-  beforeMount() {
+  beforeCreate() {
     axios
       .get('http://localhost:3000/api/post', {headers: {Authorization: 'Bearer ' + localStorage.token}})
       .then(response => {

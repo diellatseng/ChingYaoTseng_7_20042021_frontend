@@ -18,6 +18,8 @@
       </a>
     </div>
 
+    <!-- <p>{{ likes }}</p> -->
+
     <div v-show="seen" class="comments">
       <div :key="comment.id" v-for="comment in post.comments" >
         <div class="comment">
@@ -41,10 +43,14 @@ export default {
   
   data(){
     return {
-      seen: true,
+      seen: false,
+      userID: '',
+      likes: this.post.likes
     }
   },
-
+  beforeCreate() {
+    this.userID = localStorage.userID;
+  },
 };
 </script>
 

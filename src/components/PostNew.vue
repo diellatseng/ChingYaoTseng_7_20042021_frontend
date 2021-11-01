@@ -2,13 +2,13 @@
   <div class="container">
     <form @submit.prevent method="post" enctype="multipart/form-data">
       <div class="form-control">
-        <label for="post"><slot name="title">Write a new post...</slot></label>
+        <label class="form__text" for="post"><slot name="title">Write a new post...</slot></label>
         <textarea v-model="dataPost.content" name="post" rows="4" cols="25" placeholder="Say something..." required/>
       </div>
 
       <div class="form-control">
-        <label for="post__image"><slot name="title__image"></slot>Upload an image...</label>
-        <input type="file" accept="image/*" @change="uploadImage($event)" id="post__image">
+        <label class="form__image" for="image"><slot name="title__image"></slot>Upload an image...</label>
+        <input type="file" accept="image/*" @change="uploadImage($event)" id="image">
       </div>
       <button type="submit" class="button small" @click="createPost">
         Publish
@@ -56,7 +56,7 @@ export default {
       // } else {
       //   headers[Content-Type] = 'application/json';
       // }
-      console.log('send from VUE, headers:' + JSON.stringify(headers));
+      // console.log('send from VUE, headers:' + JSON.stringify(headers));
 
 
       // const formData = new FormData();
@@ -94,14 +94,9 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
+  margin-bottom: 10px;
 
-  label {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-
-  textarea {
+textarea {
     margin: 10px 0;
     padding: 3px 10px;
     background-color: lighten($color-fade-lighten, 5%);
@@ -122,6 +117,22 @@ export default {
     }
   }
 }
+
+.form {
+  &__text {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  &__image {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+  }
+
+}
+
 .icon {
   margin-left: 1em;
 }
