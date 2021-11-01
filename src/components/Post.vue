@@ -10,21 +10,22 @@
         {{ post._count.likes }}
       </div>
 
-      <div v-if="post._count.comments > 0" class="actions__comment">{{ post._count.comments }}
-        <span v-if="post._count.comments == 1">comment</span>
-        <span v-else>comments</span>
-      </div>
+      <a href="#" @click="seen = !seen">
+        <div v-if="post._count.comments > 0" class="actions__comment">{{ post._count.comments }}
+          <span v-if="post._count.comments == 1">comment</span>
+          <span v-else>comments</span>
+        </div>
+      </a>
+    </div>
 
-      <div class="container">
-        <div :key="comment.id" v-for="comment in post.comments" >
-          <div class="container">
-              <h2 class="">{{ comment }}</h2>
-              <p class="">{{ comment.created_at }}</p>
-              <p class="">{{ comment.content }}</p>
-          </div>
+    <div v-show="seen" class="comments">
+      <div :key="comment.id" v-for="comment in post.comments" >
+        <div class="comment">
+            <p class="comment__content">{{ comment.content }}</p>
+            <h4 class="comment__author">By {{ comment.author_id }} (User ID)</h4>
+            <!-- <p class="comment_date">Commented at: {{ comment.created_at }}</p> -->
         </div>
       </div>
-   
     </div>
         
   </div>
@@ -32,15 +33,8 @@
 
 <script>
 
-// import Comment from "./Comment.vue";
-// import axios from "axios";
-
-
 export default {
   name: "Post",
-  // components: {
-  //   Comment
-  // },
   props: {
     post: Object,
   },
@@ -48,24 +42,9 @@ export default {
   data(){
     return {
       seen: true,
-      // comments: []
     }
   },
-  
-  // methods: {
-  //   created() {
-  //     axios
-  //       .get('http://localhost:3000/api/post/comment', {headers: {Authorization: 'Bearer ' + localStorage.token}})
-  //       .then(response => {
-  //         this.comments = response.data
-  //         console.log(this.comments)
-  //       })
-  //       .catch (error => {
-  //         alert('You are not logged in!')
-  //         console.log(error.response)
-  //       })
-  //   },
-  // }
+
 };
 </script>
 
@@ -74,6 +53,25 @@ export default {
   padding: 20px;
   margin: 15px;
   border: 2px solid $color-fade-lighten;
+}
+
+.comments {
+  margin-top: 5px;
+  padding-top: 5px;
+}
+
+.comment {
+    margin: 10px 0;
+  
+  &__content {
+    padding: 15px;
+    border-radius: 10px;
+    background-color: lighten($color-secondary-lighten, 10%); 
+  }
+
+  &__author {
+    margin: 0;
+  }
 }
 
 .post {

@@ -137,6 +137,7 @@ export default {
           this.$router.push("/postwall");
         })
         .catch((error) => {
+          alert('Error! User not found or password incorrect.');
           console.log(error);
         });
     },
