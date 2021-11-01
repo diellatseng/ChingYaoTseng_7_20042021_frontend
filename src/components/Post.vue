@@ -1,9 +1,18 @@
 <template>
   <div class="container">
-    <h3 class="post__name">{{ post.author.full_name }}</h3>
-    <p class="post__date">{{ post.created_at | dateParse('YYYY.MM.DD HH:mm:ss') | dateFormat('DD MMM HH:mm')}}</p>
+    <div class="header">
+      <div>
+        <h3 class="header__name">{{ post.author.full_name }}</h3>
+        <p class="header__date">{{ post.created_at | dateParse('YYYY.MM.DD HH:mm:ss') | dateFormat('DD MMM HH:mm')}}</p>
+      </div>
+      <div>
+        <button class="options">
+          <font-awesome-icon icon="fa-solid fa-ellipsis" class="icon" />
+        </button>
+      </div>
+    </div>
 
-    <p>{{ post.content }}</p>
+    <p class="content">{{ post.content }}</p>
     <div class="actions">
       <div class="actions__like">
         <font-awesome-icon icon="fa-solid fa-heart" />
@@ -69,10 +78,14 @@ export default {
 .container {
   padding: 20px;
   margin: 15px;
-  border: 2px solid $color-fade-lighten;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 18px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
-.post {
+.header {
+  display: flex;
+  justify-content: space-between;
+
   &__name {
     margin-bottom: 5px;
   }
@@ -80,6 +93,13 @@ export default {
   &__date {
     margin-top: 0;
   }
+}
+
+.content {
+  // border: 2px solid $color-primary;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 7px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 .actions {
@@ -129,6 +149,11 @@ export default {
   &__date {
     margin-left: 1rem;
   }
+}
+
+.options {
+  background: none;
+  border: 0;
 }
 
 </style>
