@@ -134,6 +134,7 @@ export default {
           let log = JSON.parse(response.data);
           localStorage.userId = log.userId;
           localStorage.token = log.token;
+          localStorage.role = log.role;
           this.$router.push("/postwall");
         })
         .catch((error) => {

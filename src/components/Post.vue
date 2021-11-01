@@ -11,7 +11,7 @@
       <div>
         <div>
           <!-- Button Delete -->
-          <button v-if="post.author_id == this.userId" class="btn btn__delete">
+          <button v-if="post.author_id == this.userId || this.userRole == 'ADMIN'" class="btn btn__delete">
             <font-awesome-icon icon="fa-regular fa-trash-can" size="lg"/>
           </button>
           <!-- Button Edit -->
@@ -80,11 +80,13 @@ export default {
     return {
       seen: false,
       userId: '',
+      userRole: '',
       likes: this.post.likes
     }
   },
   mounted() {
     this.userId = localStorage.userId;
+    this.userRole = localStorage.role;
   },
   methods: {
     
