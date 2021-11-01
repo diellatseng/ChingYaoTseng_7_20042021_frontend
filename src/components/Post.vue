@@ -11,8 +11,8 @@
         {{ post._count.likes }}
       </div>
 
-      <div v-if="post._count.comments > 0" class="actions__comment">
-        <button @click="seen = !seen">
+      <div v-if="post._count.comments > 0">
+        <button @click="seen = !seen" class="actions__comment">
           {{ post._count.comments }}
           <span v-if="post._count.comments == 1">comment</span>
           <span v-else>comments</span>
@@ -26,7 +26,10 @@
       <div :key="comment.id" v-for="comment in post.comments" >
         <div class="comment">
             <p class="comment__content">{{ comment.content }}</p>
-            <h4 class="comment__author">By {{ comment.author.full_name }} (User ID)</h4>
+            <div class="comment__author">
+              <p class="comment__name">By <b>{{ comment.author.full_name }}</b></p>
+              <p class="comment__date">{{ comment.created_at | dateParse('YYYY.MM.DD HH:mm:ss') | dateFormat('DD MMM HH:mm') }}</p>
+            </div>
         </div>
       </div>
     </div>
@@ -69,25 +72,6 @@ export default {
   border: 2px solid $color-fade-lighten;
 }
 
-.comments {
-  margin-top: 5px;
-  padding-top: 5px;
-}
-
-.comment {
-    margin: 10px 0;
-  
-  &__content {
-    padding: 15px;
-    border-radius: 10px;
-    background-color: lighten($color-secondary-lighten, 10%); 
-  }
-
-  &__author {
-    margin: 0;
-  }
-}
-
 .post {
   &__name {
     margin-bottom: 5px;
@@ -102,9 +86,49 @@ export default {
 .actions {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 15px;
 
   &__like {
     color: $color-danger-darken;
+  }
+
+  &__comment {
+    background-color: white;
+    color: $color-primary;
+    border: 0;
+    text-decoration: underline;
+  }
+}
+
+.comments {
+  margin-top: 5px;
+  padding: 0 15px;
+  background-color: lighten($color-secondary-lighten, 10%);
+  border-radius: 10px;
+}
+
+.comment {
+    padding: 10px;
+  
+  &__content {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background-color: white; 
+  }
+
+  &__author {
+    display: flex;
+    justify-content: end;
+    margin: 0;
+  }
+
+  &__date, &__name {
+      margin: 0;
+    }
+
+  &__date {
+    margin-left: 1rem;
   }
 }
 
