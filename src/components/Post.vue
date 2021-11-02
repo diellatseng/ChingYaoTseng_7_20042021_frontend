@@ -113,8 +113,7 @@ export default {
     btnDelete(id) {
       axios
         .delete("http://localhost:3000/api/post/" + id, {
-          headers: { Authorization: "Bearer " + localStorage.token 
-          },
+          headers: { Authorization: "Bearer " + localStorage.token },
         })
         .then((response) => {
           let res = JSON.parse(response.data);

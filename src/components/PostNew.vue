@@ -2,13 +2,30 @@
   <div class="container">
     <form @submit.prevent method="post" enctype="multipart/form-data">
       <div class="form-control">
-        <label class="form__text" for="post"><slot name="title">Write a new post...</slot></label>
-        <textarea v-model="dataPost.content" name="post" rows="4" cols="25" placeholder="Say something..." required/>
+        <label class="form__text" for="post"
+          ><slot name="title">Write a new post...</slot></label
+        >
+        <textarea
+          v-model="dataPost.content"
+          name="post"
+          rows="4"
+          cols="25"
+          placeholder="Say something..."
+          required
+        />
       </div>
 
       <div class="form-control">
-        <label class="form__image" for="image"><slot name="title__image"></slot>Upload an image...</label>
-        <input type="file" accept="image/*" @change="uploadImage($event)" id="image">
+        <label class="form__image" for="image"
+          ><slot name="title__image"></slot>Upload an image...</label
+        >
+        <input
+          type="file"
+          accept="image/*"
+          @change="uploadImage($event)"
+          id="image"
+          name="image"
+        />
       </div>
       <button type="submit" class="button small" @click="createPost">
         Publish
@@ -19,72 +36,96 @@
 </template>
 
 <script>
-
 import axios from "axios";
 
 export default {
-  name: 'postNew',
+  name: "postNew",
   data() {
     return {
       dataPost: {
-        content: '',
-        author_id: '',
-        img_url: []
+        content: "",
+        author_id: "",
       },
-    }
+      img_file: null,
+    };
   },
-  
+
   methods: {
     uploadImage(event) {
-      this.dataPost.img_url = event.target.files[0];
-      console.log(this.dataPost);
+      this.img_file = event.target.files[0];
+      console.log(this.img_file);
     },
 
     createPost() {
       let headers = {
-        "Content-Type" : 'application/json',
-        "Authorization" : ''
+        "Content-Type": "application/json",
+        Authorization: "",
       };
       // this.dataPostString = JSON.stringify(this.dataPost);
       if (localStorage.userId) {
         this.dataPost.author_id = localStorage.userId;
-        headers.Authorization = 'Bearer ' + localStorage.token;
+        headers.Authorization = "Bearer " + localStorage.token;
       }
 
-      // if (this.dataPost.img_url) {
       //   headers[Content-Type] = 'multipart/form-data';
-      // } else {
-      //   headers[Content-Type] = 'application/json';
-      // }
-      // console.log('send from VUE, headers:' + JSON.stringify(headers));
-
 
       // const formData = new FormData();
-
-      // formData.append("content", this.dataPost.content);
-      // formData.append("author_id", this.dataPost.author_id);
       // formData.append("img_url", this.dataPost.img_url);
       // console.log('From VUE, fromData: ' + formData);
 
-      console.log('dataPost' + JSON.stringify(this.dataPost));
+      console.log("dataPost" + JSON.stringify(this.dataPost));
 
-      axios.post("http://localhost:3000/api/post", this.dataPost, { headers })
-        .then(response => {
+      axios
+        .post("http://localhost:3000/api/post", this.dataPost, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.token,
+          },
+        })
+        .then((response) => {
           let res = JSON.parse(response.data);
-            alert("Your post has been created!");
-            this.dataPost.content = "";
-            console.log(res)
-            // return res.postId
+          alert("Your post has been created!");
+          this.dataPost.content = "";
+          return res.postId;
+        })
+        .then((postId) => {
+          if (!this.img_file == "") {
+            console.log("2nd then, HAS image -> " + this.img_file);
+
+            let data = new FormData();
+            data.append("file", this.img_file);
+            data.append("name", this.img_file.name);
+
+            console.log('this is the form data frontend' + data);
+
+            axios
+              .put("http://localhost:3000/api/post/" + postId, data, {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                  Authorization: "Bearer " + localStorage.token,
+                },
+              })
+              .then((response) => {
+                let res = JSON.parse(response.data);
+                console.log("response from modifying post with image: " + res);
+                this.img_file = "";
+              })
+              .catch((error) => {
+                console.log("Error from modifying post with image: " + error);
+              });
+          }
+          console.log(
+            "img: " + this.img_file + "content: " + this.dataPost.content
+          );
         })
         // .then pass postId -> check image -> send 2em request to updatePost
         // refresh by window.location.assign("http://localhost:8080/postwall");
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error.toJSON());
-      })
-    }
+        });
+    },
   },
-}
-
+};
 </script>
 
 <style scoped lang="scss">
@@ -92,7 +133,8 @@ export default {
   padding: 20px;
   margin: 15px;
   border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 18px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 18px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 .form-control {
   position: relative;
@@ -100,7 +142,7 @@ export default {
   flex-direction: column;
   margin-bottom: 10px;
 
-textarea {
+  textarea {
     margin: 10px 0;
     padding: 3px 10px;
     background-color: lighten($color-fade-lighten, 5%);
@@ -134,7 +176,6 @@ textarea {
     margin-bottom: 10px;
     font-size: 1.2rem;
   }
-
 }
 
 .icon {
@@ -142,7 +183,7 @@ textarea {
 }
 
 .button {
-  width: 100%
+  width: 100%;
 }
 
 h1 {
