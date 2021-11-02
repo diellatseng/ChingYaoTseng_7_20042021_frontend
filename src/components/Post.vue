@@ -38,6 +38,7 @@
 
     <!-- Post content -->
     <p class="content">{{ post.content }}</p>
+    <img :src="post.img_url" alt="">
 
     <div class="actions">
       <!-- Like button -->
@@ -116,8 +117,8 @@ export default {
           headers: { Authorization: "Bearer " + localStorage.token },
         })
         .then((response) => {
-          let res = JSON.parse(response.data);
-          console.log(res.message);
+          // let res = JSON.parse(response.data);
+          console.log(response.data);
           window.location.assign("http://localhost:8080/postwall");
         })
         .catch((error) => {

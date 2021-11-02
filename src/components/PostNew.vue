@@ -57,24 +57,10 @@ export default {
     },
 
     createPost() {
-      let headers = {
-        "Content-Type": "application/json",
-        Authorization: "",
-      };
-      // this.dataPostString = JSON.stringify(this.dataPost);
       if (localStorage.userId) {
         this.dataPost.author_id = localStorage.userId;
-        headers.Authorization = "Bearer " + localStorage.token;
       }
-
-      //   headers[Content-Type] = 'multipart/form-data';
-
-      // const formData = new FormData();
-      // formData.append("img_url", this.dataPost.img_url);
-      // console.log('From VUE, fromData: ' + formData);
-
-      console.log("dataPost" + JSON.stringify(this.dataPost));
-
+      // Send text data to create a new post
       axios
         .post("http://localhost:3000/api/post", this.dataPost, {
           headers: {
@@ -82,21 +68,19 @@ export default {
             Authorization: "Bearer " + localStorage.token,
           },
         })
+        // After created a new post, return its post ID
         .then((response) => {
           let res = JSON.parse(response.data);
           alert("Your post has been created!");
-          this.dataPost.content = "";
+          this.dataPost.content = "";   // Clear img_file after request is sent
           return res.postId;
         })
+        // Check if an image is uploaded, and then modify the post with uploaded image
         .then((postId) => {
           if (!this.img_file == "") {
-            console.log("2nd then, HAS image -> " + this.img_file);
-
             let data = new FormData();
             data.append("file", this.img_file);
             data.append("name", this.img_file.name);
-
-            console.log('this is the form data frontend' + data);
 
             axios
               .put("http://localhost:3000/api/post/" + postId, data, {
@@ -107,16 +91,13 @@ export default {
               })
               .then((response) => {
                 let res = JSON.parse(response.data);
-                console.log("response from modifying post with image: " + res);
-                this.img_file = "";
+                console.log(res);
+                this.img_file = "";   // Clear img_file after request is sent
               })
               .catch((error) => {
                 console.log("Error from modifying post with image: " + error);
               });
           }
-          console.log(
-            "img: " + this.img_file + "content: " + this.dataPost.content
-          );
         })
         // .then pass postId -> check image -> send 2em request to updatePost
         // refresh by window.location.assign("http://localhost:8080/postwall");
