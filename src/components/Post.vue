@@ -4,23 +4,36 @@
     <div class="header">
       <div>
         <h3 class="header__name">{{ post.author.full_name }}</h3>
-        <p class="header__date">{{ post.created_at | dateParse('YYYY.MM.DD HH:mm:ss') | dateFormat('DD MMM HH:mm')}}</p>
+        <p class="header__date">
+          {{
+            post.created_at
+              | dateParse("YYYY.MM.DD HH:mm:ss")
+              | dateFormat("DD MMM HH:mm")
+          }}
+        </p>
       </div>
-      
+
       <!-- Post options-->
       <div>
         <div>
           <!-- Button Delete -->
-          <button v-if="post.author_id == this.userId || this.userRole == 'ADMIN'" class="btn btn__delete">
-            <font-awesome-icon icon="fa-regular fa-trash-can" size="lg"/>
+          <button
+            @click="btnDelete(post.id)"
+            v-if="post.author_id == this.userId || this.userRole == 'ADMIN'"
+            class="btn btn__delete"
+          >
+            <font-awesome-icon icon="fa-regular fa-trash-can" size="lg" />
           </button>
           <!-- Button Edit -->
-          <button v-if="post.author_id == this.userId" class="btn btn__edit">
-            <font-awesome-icon icon="fa-solid fa-pen-to-square" size="lg"/>
+          <button
+            @click="btnEdit(post.id)"
+            v-if="post.author_id == this.userId"
+            class="btn btn__edit"
+          >
+            <font-awesome-icon icon="fa-solid fa-pen-to-square" size="lg" />
           </button>
         </div>
       </div>
-
     </div>
 
     <!-- Post content -->
@@ -30,7 +43,7 @@
       <!-- Like button -->
       <div class="actions__like">
         <font-awesome-icon icon="fa-solid fa-heart" />
-        <font-awesome-icon icon="fa-regular fa-heart" /> 
+        <font-awesome-icon icon="fa-regular fa-heart" />
         {{ post._count.likes }}
       </div>
       <!-- Comment counts -->
@@ -47,25 +60,33 @@
 
     <!-- Comments -->
     <div v-show="seen" class="comments">
-      <div :key="comment.id" v-for="comment in post.comments" >
+      <div :key="comment.id" v-for="comment in post.comments">
         <div class="comment">
-            <p class="comment__content">{{ comment.content }}</p>
-            <div class="comment__author">
-              <p class="comment__name">By <b>{{ comment.author.full_name }}</b></p>
-              <p class="comment__date">{{ comment.created_at | dateParse('YYYY.MM.DD HH:mm:ss') | dateFormat('DD MMM HH:mm') }}</p>
-            </div>
+          <p class="comment__content">{{ comment.content }}</p>
+          <div class="comment__author">
+            <p class="comment__name">
+              By <b>{{ comment.author.full_name }}</b>
+            </p>
+            <p class="comment__date">
+              {{
+                comment.created_at
+                  | dateParse("YYYY.MM.DD HH:mm:ss")
+                  | dateFormat("DD MMM HH:mm")
+              }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
-        
   </div>
 </template>
 
 <script>
+import axios from "axios";
 
-import Vue from 'vue';
-import VueFilterDateParse from '@vuejs-community/vue-filter-date-parse';
-import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
+import Vue from "vue";
+import VueFilterDateParse from "@vuejs-community/vue-filter-date-parse";
+import VueFilterDateFormat from "@vuejs-community/vue-filter-date-format";
 
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
@@ -75,22 +96,36 @@ export default {
   props: {
     post: Object,
   },
-  
-  data(){
+
+  data() {
     return {
       seen: false,
-      userId: '',
-      userRole: '',
-      likes: this.post.likes
-    }
+      userId: "",
+      userRole: "",
+      likes: this.post.likes,
+    };
   },
   mounted() {
     this.userId = localStorage.userId;
     this.userRole = localStorage.role;
   },
   methods: {
-    
-  }
+    btnDelete(id) {
+      axios
+        .delete("http://localhost:3000/api/post/" + id, {
+          headers: { Authorization: "Bearer " + localStorage.token 
+          },
+        })
+        .then((response) => {
+          let res = JSON.parse(response.data);
+          console.log(res.message);
+          window.location.assign("http://localhost:8080/postwall");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 
@@ -99,7 +134,8 @@ export default {
   padding: 20px;
   margin: 15px;
   border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 18px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 18px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 .header {
@@ -119,7 +155,8 @@ export default {
   // border: 2px solid $color-primary;
   padding: 10px;
   border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 7px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 7px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 .actions {
@@ -147,13 +184,13 @@ export default {
 }
 
 .comment {
-    padding: 10px;
-  
+  padding: 10px;
+
   &__content {
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 10px;
-    background-color: white; 
+    background-color: white;
   }
 
   &__author {
@@ -162,9 +199,10 @@ export default {
     margin: 0;
   }
 
-  &__date, &__name {
-      margin: 0;
-    }
+  &__date,
+  &__name {
+    margin: 0;
+  }
 
   &__date {
     margin-left: 1rem;
@@ -176,9 +214,9 @@ export default {
   background: none;
   border-radius: 5px;
 
-    &__edit {
-      border: 0px solid $color-primary;
-    }
+  &__edit {
+    border: 0px solid $color-primary;
+  }
 
   &__delete {
     margin-right: 1rem;
@@ -187,5 +225,4 @@ export default {
     color: white;
   }
 }
-
 </style>

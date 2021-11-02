@@ -77,6 +77,7 @@ export default {
             // return res.postId
         })
         // .then pass postId -> check image -> send 2em request to updatePost
+        // refresh by window.location.assign("http://localhost:8080/postwall");
         .catch(function (error) {
           console.log(error.toJSON());
       })
