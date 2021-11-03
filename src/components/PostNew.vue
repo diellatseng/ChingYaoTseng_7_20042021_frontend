@@ -68,7 +68,7 @@ export default {
             Authorization: "Bearer " + localStorage.token,
           },
         })
-        // After created a new post, return its post ID
+        // After creating the new post, return its post ID
         .then((response) => {
           let res = JSON.parse(response.data);
           alert("Your post has been created!");
@@ -93,14 +93,15 @@ export default {
                 let res = JSON.parse(response.data);
                 console.log(res);
                 this.img_file = "";   // Clear img_file after request is sent
+                window.location.assign("http://localhost:8080/postwall");
               })
               .catch((error) => {
                 console.log("Error from modifying post with image: " + error);
               });
+          } else {
+            window.location.assign("http://localhost:8080/postwall");
           }
         })
-        // .then pass postId -> check image -> send 2em request to updatePost
-        // refresh by window.location.assign("http://localhost:8080/postwall");
         .catch((error) => {
           console.log(error.toJSON());
         });

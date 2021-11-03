@@ -37,8 +37,13 @@
     </div>
 
     <!-- Post content -->
-    <p class="content">{{ post.content }}</p>
-    <img :src="post.img_url" alt="">
+    <div class="content">
+      <img v-if="post.img_url !== null " :src="post.img_url" alt="">
+      <p>
+        {{ post.content }}
+      </p>
+    </div>
+
 
     <div class="actions">
       <!-- Like button -->
@@ -152,11 +157,17 @@ export default {
 }
 
 .content {
-  // border: 2px solid $color-primary;
+  margin-bottom: 1rem;
   padding: 10px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 7px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+  img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+  }
 }
 
 .actions {
@@ -225,4 +236,6 @@ export default {
     color: white;
   }
 }
+
+
 </style>
