@@ -9,6 +9,12 @@ export default new Vuex.Store({
       userId: "",
       token: "",
       
+    },
+    posts: []
+  },
+  getters: {
+    getPosts(state) {
+      return state.posts
     }
   },
   mutations: {

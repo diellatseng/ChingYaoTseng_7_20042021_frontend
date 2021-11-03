@@ -4,7 +4,7 @@
     <div class="container">
       <div class="profile__card">
         <div class="profile__image">
-          <img src="../assets/images/user/1-crop.jpg" />
+          <img :src="user.img_url" />
         </div>
         <div class="profile__content">
           <p>Change Profile Image</p>
@@ -38,11 +38,7 @@ export default {
 
   data() {
     return {
-      user: {
-        full_name: '',
-        email: '',
-        img_url: ''
-      }
+      user: Array
     }
   },
 
@@ -71,7 +67,7 @@ export default {
     axios
       .get('http://localhost:3000/api/user/', {headers: {Authorization: 'Bearer ' + localStorage.token}})
       .then(response => {
-        this.user = response.data;
+        this.user = response.data[0];
         console.log(this.user);
       })
       .catch (error => {
