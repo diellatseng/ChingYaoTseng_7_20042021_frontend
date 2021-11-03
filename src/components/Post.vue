@@ -159,9 +159,6 @@ export default {
 .content {
   margin-bottom: 1rem;
   padding: 10px;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 7px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 
   img {
     width: 100%;
