@@ -130,7 +130,6 @@ export default {
           headers: { Authorization: "Bearer " + localStorage.token },
         })
         .then((response) => {
-          // let res = JSON.parse(response.data);
           console.log(response.data);
           window.location.assign("http://localhost:8080/postwall");
         })
