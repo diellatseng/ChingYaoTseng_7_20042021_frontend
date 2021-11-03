@@ -48,9 +48,14 @@
     <div class="actions">
       <!-- Like button -->
       <div class="actions__like">
-        <font-awesome-icon icon="fa-solid fa-heart" />
-        <font-awesome-icon icon="fa-regular fa-heart" />
+        <button @click="btnLike(0)" v-if="this.liked === true" class="btn btn__like">
+          <font-awesome-icon icon="fa-solid fa-heart"/>
+        </button>
+        <button @click="btnLike(1)" v-else class="btn btn__like">
+          <font-awesome-icon icon="fa-regular fa-heart"/>
+        </button>
         {{ post._count.likes }}
+
       </div>
       <!-- Comment counts -->
       <div v-if="post._count.comments > 0">
@@ -102,18 +107,21 @@ export default {
   props: {
     post: Object,
   },
-
   data() {
     return {
       seen: false,
-      userId: "",
-      userRole: "",
-      likes: this.post.likes,
+      userId: Number,
+      userRole: String,
+      liked: Boolean
+      // likes: this.post.likes,
     };
   },
-  mounted() {
-    this.userId = localStorage.userId;
+
+  created() {
+    this.userId = parseInt(localStorage.userId, 10);
     this.userRole = localStorage.role;
+    // Find userId in Array of Likes, return true if found
+    this.liked = this.post.likes.map(a => a.author_id).includes(this.userId);
   },
   methods: {
     btnDelete(id) {
@@ -130,6 +138,9 @@ export default {
           console.log(error);
         });
     },
+    btnLike(param) {
+      console.log('btnLiked: ' + param);
+    }
   },
 };
 </script>
@@ -170,7 +181,9 @@ export default {
 .actions {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
+  font-size: 1.2rem;
 
   &__like {
     color: $color-danger-darken;
@@ -231,6 +244,11 @@ export default {
     border: 0px solid $color-danger;
     background-color: $color-danger-darken;
     color: white;
+  }
+
+  &__like {
+    color: $color-danger-darken;
+    border: 0;
   }
 }
 

@@ -33,7 +33,7 @@ export default {
       .get('http://localhost:3000/api/post', {headers: {Authorization: 'Bearer ' + localStorage.token}})
       .then(response => {
         this.posts = response.data
-        console.log(JSON.stringify(this.posts))
+        // console.log(JSON.stringify(this.posts))
       })
       .catch (error => {
         alert('You are not logged in!')
