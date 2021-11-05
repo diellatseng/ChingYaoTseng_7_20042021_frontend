@@ -48,16 +48,16 @@
       <!-- Like button -->
       <div class="actions__like">
         <button
-          @click="btnLike(0)"
+          @click="btnLike(post.id)"
           v-if="this.liked === true"
           class="btn btn__like"
         >
           <font-awesome-icon icon="fa-solid fa-heart" />
         </button>
-        <button @click="btnLike(1)" v-else class="btn btn__like">
+        <button @click="btnLike(post.id)" v-else class="btn btn__like">
           <font-awesome-icon icon="fa-regular fa-heart" />
         </button>
-        <!-- {{ this.post.likes }} -->
+        {{ numLikes }}
       </div>
 
       <!-- Comment counts -->
@@ -114,30 +114,19 @@ export default {
       userId: Number,
       userRole: String,
       liked: Boolean,
-      likes: Array,
+      numLikes: this.post._count_likes
     };
   },
 
-  computed: {
-    numLikes() {
-      return this.post.likes.length();
-    },
-  },
-
-  created() {
-    this.userId = parseInt(localStorage.userId, 10);
-    this.userRole = localStorage.role;
-    // Find userId in Array of Likes, return true if found
-    this.likes = this.post.likes;
-    // console.log(this.likes.includes(50))
-
+created() {
+  this.userId = parseInt(localStorage.userId, 10);
+  this.userRole = localStorage.role;
+  if (this.post.likes !== null) {
+    this.liked = this.post.likes.includes(this.userId);
+  } else {
     this.liked = false;
-  },
-
-  // beforeMount() {
-  //   console.log(this.likes.length)
-  // },
-
+  }
+},
   methods: {
     btnDelete(id) {
       axios
@@ -152,8 +141,25 @@ export default {
           console.log(error);
         });
     },
-    btnLike(param) {
-      console.log("btnLiked: " + param);
+    btnLike(postId) {
+      const payload = {
+        like: this.liked
+      }
+      axios
+        .post("http://localhost:3000/api/post/" + postId + "/like", payload, {
+           headers: { Authorization: "Bearer " + localStorage.token},
+        })
+        .then((response) => {
+          this.liked = response.data.like;
+          if (this.liked === true) {
+            this.numLikes += 1;
+          } else {
+            this.numLikes -= 1;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
@@ -230,7 +236,7 @@ export default {
 
   &__author {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin: 0;
   }
 
