@@ -62,7 +62,13 @@
 
       <!-- Comment counts -->
       <div v-if="post._count_comments > 0">
-        <button @click="seen = !seen" class="actions__comment">
+        <button
+          @click="
+            seen = !seen;
+            getComments(post.id);
+          "
+          class="actions__comment"
+        >
           {{ post._count_comments }}
           <span v-if="post._count_comments == 1">comment</span>
           <span v-else>comments</span>
@@ -72,12 +78,12 @@
 
     <!-- Comments -->
     <div v-show="seen" class="comments">
-      <!-- <div :key="comment.id" v-for="comment in post.comments">
+      <div :key="comment.id" v-for="comment in this.comments">
         <div class="comment">
           <p class="comment__content">{{ comment.content }}</p>
           <div class="comment__author">
             <p class="comment__name">
-              By <b>{{ comment.author.full_name }}</b>
+              By <b>{{ comment.full_name }}</b>
             </p>
             <p class="comment__date">
               {{
@@ -88,7 +94,7 @@
             </p>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -114,19 +120,20 @@ export default {
       userId: Number,
       userRole: String,
       liked: Boolean,
-      numLikes: this.post._count_likes
+      numLikes: this.post._count_likes,
+      comments: Array
     };
   },
 
-created() {
-  this.userId = parseInt(localStorage.userId, 10);
-  this.userRole = localStorage.role;
-  if (this.post.likes !== null) {
-    this.liked = this.post.likes.includes(this.userId);
-  } else {
-    this.liked = false;
-  }
-},
+  created() {
+    this.userId = parseInt(localStorage.userId, 10);
+    this.userRole = localStorage.role;
+    if (this.post.likes !== null) {
+      this.liked = this.post.likes.includes(this.userId);
+    } else {
+      this.liked = false;
+    }
+  },
   methods: {
     btnDelete(id) {
       axios
@@ -143,11 +150,11 @@ created() {
     },
     btnLike(postId) {
       const payload = {
-        like: this.liked
-      }
+        like: this.liked,
+      };
       axios
         .post("http://localhost:3000/api/post/" + postId + "/like", payload, {
-           headers: { Authorization: "Bearer " + localStorage.token},
+          headers: { Authorization: "Bearer " + localStorage.token },
         })
         .then((response) => {
           this.liked = response.data.like;
@@ -156,6 +163,19 @@ created() {
           } else {
             this.numLikes -= 1;
           }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getComments(postID) {
+      axios
+        .get("http://localhost:3000/api/post/" + postID + "/comment", {
+          headers: { Authorization: "Bearer " + localStorage.token },
+        })
+        .then((response) => {
+          this.comments = response.data;
+          console.log(this.comments);
         })
         .catch((error) => {
           console.log(error);
