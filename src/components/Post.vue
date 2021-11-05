@@ -3,7 +3,7 @@
     <!-- Post header-->
     <div class="header">
       <div>
-        <h3 class="header__name">{{ post.author.full_name }}</h3>
+        <h3 class="header__name">{{ post.full_name }}</h3>
         <p class="header__date">
           {{
             post.created_at
@@ -38,40 +38,41 @@
 
     <!-- Post content -->
     <div class="content">
-      <img v-if="post.img_url !== null " :src="post.img_url" alt="">
+      <img v-if="post.img_url !== null" :src="post.img_url" alt="" />
       <p>
         {{ post.content }}
       </p>
     </div>
 
-
     <div class="actions">
       <!-- Like button -->
       <div class="actions__like">
-        <button @click="btnLike(0)" v-if="this.liked === true" class="btn btn__like">
-          <font-awesome-icon icon="fa-solid fa-heart"/>
+        <button
+          @click="btnLike(post.id)"
+          v-if="this.liked === true"
+          class="btn btn__like"
+        >
+          <font-awesome-icon icon="fa-solid fa-heart" />
         </button>
-        <button @click="btnLike(1)" v-else class="btn btn__like">
-          <font-awesome-icon icon="fa-regular fa-heart"/>
+        <button @click="btnLike(post.id)" v-else class="btn btn__like">
+          <font-awesome-icon icon="fa-regular fa-heart" />
         </button>
-        {{ post._count.likes }}
-
+        {{ numLikes }}
       </div>
+
       <!-- Comment counts -->
-      <div v-if="post._count.comments > 0">
+      <div v-if="post._count_comments > 0">
         <button @click="seen = !seen" class="actions__comment">
-          {{ post._count.comments }}
-          <span v-if="post._count.comments == 1">comment</span>
+          {{ post._count_comments }}
+          <span v-if="post._count_comments == 1">comment</span>
           <span v-else>comments</span>
         </button>
       </div>
     </div>
 
-    <!-- <p>{{ likes }}</p> -->
-
     <!-- Comments -->
     <div v-show="seen" class="comments">
-      <div :key="comment.id" v-for="comment in post.comments">
+      <!-- <div :key="comment.id" v-for="comment in post.comments">
         <div class="comment">
           <p class="comment__content">{{ comment.content }}</p>
           <div class="comment__author">
@@ -87,7 +88,7 @@
             </p>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -112,17 +113,20 @@ export default {
       seen: false,
       userId: Number,
       userRole: String,
-      liked: Boolean
-      // likes: this.post.likes,
+      liked: Boolean,
+      numLikes: this.post._count_likes
     };
   },
 
-  created() {
-    this.userId = parseInt(localStorage.userId, 10);
-    this.userRole = localStorage.role;
-    // Find userId in Array of Likes, return true if found
-    this.liked = this.post.likes.map(a => a.author_id).includes(this.userId);
-  },
+created() {
+  this.userId = parseInt(localStorage.userId, 10);
+  this.userRole = localStorage.role;
+  if (this.post.likes !== null) {
+    this.liked = this.post.likes.includes(this.userId);
+  } else {
+    this.liked = false;
+  }
+},
   methods: {
     btnDelete(id) {
       axios
@@ -137,9 +141,26 @@ export default {
           console.log(error);
         });
     },
-    btnLike(param) {
-      console.log('btnLiked: ' + param);
-    }
+    btnLike(postId) {
+      const payload = {
+        like: this.liked
+      }
+      axios
+        .post("http://localhost:3000/api/post/" + postId + "/like", payload, {
+           headers: { Authorization: "Bearer " + localStorage.token},
+        })
+        .then((response) => {
+          this.liked = response.data.like;
+          if (this.liked === true) {
+            this.numLikes += 1;
+          } else {
+            this.numLikes -= 1;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
@@ -215,7 +236,7 @@ export default {
 
   &__author {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin: 0;
   }
 
@@ -250,6 +271,4 @@ export default {
     border: 0;
   }
 }
-
-
 </style>
