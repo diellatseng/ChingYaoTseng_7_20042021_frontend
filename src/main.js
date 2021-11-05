@@ -19,7 +19,8 @@ import {
 import { 
   faUser, 
   faHeart as farHeart,
-  faTrashCan
+  faTrashCan,
+  faImage
 } from '@fortawesome/free-regular-svg-icons'
 
 /* import font awesome icon component */
@@ -34,7 +35,8 @@ library.add(
   faPaperPlane, 
   faEllipsis,
   faPenToSquare,
-  faTrashCan
+  faTrashCan,
+  faImage
 )
 
 /* add font awesome icon component */

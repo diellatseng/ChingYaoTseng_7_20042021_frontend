@@ -2,9 +2,9 @@
   <div class="container">
     <form @submit.prevent method="post" enctype="multipart/form-data">
       <div class="form-control">
-        <label class="form__text" for="post"
-          ><slot name="title">Write a new post...</slot></label
-        >
+        <label class="form__text" for="post">
+          <slot name="title">Write a new post...</slot>
+        </label>
         <textarea
           v-model="dataPost.content"
           name="post"
@@ -15,10 +15,10 @@
         />
       </div>
 
-      <div class="form-control">
-        <label class="form__image" for="image"
-          ><slot name="title__image"></slot>Upload an image...</label
-        >
+      <div class="form-control form__image" v-show="seen">
+        <label for="image" class="form__image__title">
+          <slot name="title__image">Upload an image</slot>
+        </label>
         <input
           type="file"
           accept="image/*"
@@ -27,10 +27,20 @@
           name="image"
         />
       </div>
+
+      <div class="formAction">
+        <button class="formAction__btn" @click="seen = !seen">
+          <font-awesome-icon icon="fa-regular fa-image"/>
+        </button>
+
       <button type="submit" class="button small" @click="createPost">
         Publish
-        <font-awesome-icon icon="fa-solid fa-paper-plane" class="icon" />
+        <font-awesome-icon icon="fa-solid fa-paper-plane" class="submit-icon" />
       </button>
+
+      </div>
+
+
     </form>
   </div>
 </template>
@@ -47,6 +57,7 @@ export default {
         author_id: "",
       },
       img_file: null,
+      seen: false
     };
   },
 
@@ -115,8 +126,10 @@ export default {
   padding: 20px;
   margin: 15px;
   border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 18px 0px,
+  box-shadow: 
+    rgba(0, 0, 0, 0.05) 0px 6px 18px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  background-color: white;
 }
 .form-control {
   position: relative;
@@ -134,9 +147,6 @@ export default {
     &:focus {
       border: 2px solid $color-primary;
       background-color: white;
-    }
-
-    &:focus + label {
       color: $color-primary-darken;
     }
 
@@ -154,13 +164,37 @@ export default {
   }
 
   &__image {
-    display: block;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 5px;
+    border: 1px solid $color-fade;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  }
+
+  &__image__title {
+    width: 100%;
+    text-align: center;
+    padding: 5px 0;
     margin-bottom: 10px;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    border-bottom: 1px solid $color-fade;
+      &:hover {
+        cursor: pointer;
+      }
   }
 }
 
-.icon {
+#image {
+  width: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
+}
+
+.submit-icon {
   margin-left: 1em;
 }
 
@@ -168,7 +202,43 @@ export default {
   width: 100%;
 }
 
+input[type=file]::file-selector-button {
+  border: 0;
+  padding: .2em .4em;
+  border-radius: .2em;
+  margin-right: .5rem;
+  background-color: $color-fade-lighten;
+  transition: 200ms;
+
+    &:hover {
+      cursor: pointer;
+    }
+}
+
+input[type=file]::file-selector-button:hover {
+  background-color: $color-accent-lighten;
+}
+
 h1 {
   font-size: 1rem;
+}
+
+.formAction {
+  display: flex;
+
+  &__btn{
+    margin-right: 1rem;
+    padding: 0;
+    border: 0;
+    font-size: 2.3rem;
+    color: $color-accent-darken;
+    background-color: white;
+    transition: 200ms;
+
+    &:hover {
+      cursor: pointer;
+      color: darken($color-accent-darken, 10%);
+    }
+  }
 }
 </style>

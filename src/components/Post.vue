@@ -52,10 +52,10 @@
           v-if="this.liked === true"
           class="btn btn__like"
         >
-          <font-awesome-icon icon="fa-solid fa-heart" />
+          <font-awesome-icon icon="fa-solid fa-heart" class="icon"/>Liked
         </button>
         <button @click="btnLike(post.id)" v-else class="btn btn__like">
-          <font-awesome-icon icon="fa-regular fa-heart" />
+          <font-awesome-icon icon="fa-regular fa-heart" class="icon"/>Like
         </button>
         {{ numLikes }}
       </div>
@@ -80,11 +80,12 @@
     <div v-show="seen" class="comments">
       <div :key="comment.id" v-for="comment in this.comments">
         <div class="comment">
-          <p class="comment__content">{{ comment.content }}</p>
-          <div class="comment__author">
-            <p class="comment__name">
-              By <b>{{ comment.full_name }}</b>
-            </p>
+          <p class="comment__name">
+            <b>{{ comment.full_name }}</b>
+          </p>
+
+          <div class="comment__content">
+            <p>{{ comment.content }}</p>
             <p class="comment__date">
               {{
                 comment.created_at
@@ -96,6 +97,10 @@
         </div>
       </div>
     </div>
+
+    <!-- Comment Input -->
+    <CommentInput />
+
   </div>
 </template>
 
@@ -106,11 +111,16 @@ import Vue from "vue";
 import VueFilterDateParse from "@vuejs-community/vue-filter-date-parse";
 import VueFilterDateFormat from "@vuejs-community/vue-filter-date-format";
 
+import CommentInput from "@/components/CommentInput.vue";
+
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
 
 export default {
   name: "Post",
+  components: {
+    CommentInput
+  },
   props: {
     post: Object,
   },
@@ -121,7 +131,7 @@ export default {
       userRole: String,
       liked: Boolean,
       numLikes: this.post._count_likes,
-      comments: Array
+      comments: Array,
     };
   },
 
@@ -181,6 +191,9 @@ export default {
           console.log(error);
         });
     },
+    createComment() {
+      console.log('create comment')
+    }
   },
 };
 </script>
@@ -190,8 +203,10 @@ export default {
   padding: 20px;
   margin: 15px;
   border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 18px 0px,
+  box-shadow: 
+    rgba(0, 0, 0, 0.05) 0px 6px 18px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  background-color: white;
 }
 
 .header {
@@ -203,12 +218,11 @@ export default {
   }
 
   &__date {
-    margin-top: 0;
+    margin: 0;
   }
 }
 
 .content {
-  margin-bottom: 1rem;
   padding: 10px;
 
   img {
@@ -222,8 +236,9 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  padding: 10px 0;
   font-size: 1.2rem;
+  border-top: solid 1px $color-fade-lighten;
 
   &__like {
     color: $color-danger-darken;
@@ -239,34 +254,34 @@ export default {
 
 .comments {
   margin-top: 5px;
-  padding: 0 15px;
-  background-color: lighten($color-secondary-lighten, 10%);
-  border-radius: 10px;
+  border-top: 1px solid $color-fade-lighten;
+  background-color: white;
 }
 
 .comment {
   padding: 10px;
 
+  &__name {
+    margin-top: 0;
+    margin-bottom: .5rem;
+  }
+
   &__content {
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 10px;
-    background-color: white;
-  }
+    background-color: $color-secondary-lightenMax;
 
-  &__author {
-    display: flex;
-    justify-content: flex-end;
-    margin: 0;
-  }
-
-  &__date,
-  &__name {
-    margin: 0;
+    & p {
+      margin: 0;
+    }
   }
 
   &__date {
-    margin-left: 1rem;
+    margin: 0;
+    color: $color-fade-darken;
+    font-size: .9rem;
+    text-align: end;
   }
 }
 
@@ -290,5 +305,9 @@ export default {
     color: $color-danger-darken;
     border: 0;
   }
+}
+
+.icon {
+  margin-right: 10px;
 }
 </style>

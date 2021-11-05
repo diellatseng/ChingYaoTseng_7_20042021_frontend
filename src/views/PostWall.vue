@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isFetching === false" class="div">
+  <div v-if="isFetching === false" class="posts">
     <TheHeader />
     <PostNew>Write a new post...</PostNew>
     <Posts :posts="posts" />
@@ -29,18 +29,13 @@ export default {
       posts: [],
     };
   },
-  // computed: {
-  //   posts() {
-  //       return this.$store.getters.getPosts
-  //   }
-  // },
   beforeCreate() {
     axios
       .get('http://localhost:3000/api/post', {headers: {Authorization: 'Bearer ' + localStorage.token}})
       .then(response => {
         this.isFetching = false
         this.posts = response.data
-        // console.log(this.posts)
+        console.log(this.posts)
       })
       .catch (error => {
         alert('You are not logged in!')
@@ -49,3 +44,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .posts {
+    background-color: $color-fade-lighten;
+  }
+</style>
