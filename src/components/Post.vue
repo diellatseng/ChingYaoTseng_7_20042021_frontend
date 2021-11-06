@@ -80,18 +80,30 @@
     <div v-show="seen" class="comments">
       <div :key="comment.id" v-for="comment in this.comments">
         <div class="comment">
+
           <p class="comment__name">
             <b>{{ comment.full_name }}</b>
           </p>
 
+          
+
           <div class="comment__content">
             <p>{{ comment.content }}</p>
-            <p class="comment__date">
+            <p class="comment__footer">
               {{
                 comment.created_at
                   | dateParse("YYYY.MM.DD HH:mm:ss")
                   | dateFormat("DD MMM HH:mm")
               }}
+
+              <!-- Button Delete -->
+              <button
+                @click="btnDeleteComment(post.id, comment.id)"
+                v-if="comment.author_id == userId || userRole == 'ADMIN'"
+                class="btn btn__delete__comment"
+              >
+                <font-awesome-icon icon="fa-regular fa-trash-can" size="lg" />
+              </button>
             </p>
           </div>
         </div>
@@ -148,6 +160,21 @@ export default {
     btnDelete(id) {
       axios
         .delete("http://localhost:3000/api/post/" + id, {
+          headers: { Authorization: "Bearer " + localStorage.token },
+        })
+        .then((response) => {
+          console.log(response.data);
+          window.location.assign("http://localhost:8080/postwall");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    btnDeleteComment(PostId, CommentId) {
+      console.log('PostId: ' + PostId);
+      console.log('CommentId: ' + CommentId);
+      axios
+        .delete("http://localhost:3000/api/post/" + PostId + "/comment/" + CommentId, {
           headers: { Authorization: "Bearer " + localStorage.token },
         })
         .then((response) => {
@@ -274,7 +301,7 @@ export default {
     }
   }
 
-  &__date {
+  &__footer {
     margin: 0;
     color: $color-fade-darken;
     font-size: .9rem;
@@ -288,14 +315,19 @@ export default {
   border-radius: 5px;
 
   &__edit {
-    border: 0px solid $color-primary;
+    border: 0px;
   }
 
   &__delete {
     margin-right: 1rem;
-    border: 0px solid $color-danger;
+    border: 0px;
     background-color: $color-danger-darken;
     color: white;
+
+    &__comment {
+      border: 0;
+      color: $color-danger-darken;
+    }
   }
 
   &__like {
