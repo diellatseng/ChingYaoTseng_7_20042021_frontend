@@ -12,7 +12,7 @@
             required
             />
             
-            <button type="submit" class="button small" @click="submit()">
+            <button type="submit" class="button small" @click="createComment(post.id)">
             <font-awesome-icon icon="fa-solid fa-paper-plane" class="icon" />
 
         </button>
@@ -21,25 +21,44 @@
 </template>
 
 <script>
+
+import axios from "axios";
+
 export default {
-    name: "CommentInput",
-    data() {
-        return {
-            userId: Number,
-            dataPost: {
-                content: '',
-                author_id: this.userId,
-            },
-        }
-    },
-    created() {
-    this.userId = parseInt(localStorage.userId, 10);
-    },
-    methods: {
-        submit(){
-            console.log(this.userId)
-        }
-    }
+  name: "CommentInput",
+  data() {
+      return {
+        dataPost: {
+            content: '',
+            author_id: this.userId,
+        },
+      }
+  },
+  props: {
+    post: Object,
+    userId: Number,
+  },
+  // created() {
+  //   this.userId = localStorage.userId;
+  // },
+  methods: {
+      createComment(postId){
+          axios
+            .post("http://localhost:3000/api/post/" + postId + "/comment", this.dataPost, {
+              headers: {
+              // "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.token,
+              }
+            })
+            .then((response) => {
+              console.log(response.data);
+              window.location.reload();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      },
+  }
 }
 </script>
 

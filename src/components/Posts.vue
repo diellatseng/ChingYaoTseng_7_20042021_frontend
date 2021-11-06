@@ -1,7 +1,7 @@
 <template>
   <div>
     <div :key="post.id" v-for="post in posts" :post="post">
-      <Post :post="post" />
+      <Post :post="post"/>
     </div>
   </div>
 </template>

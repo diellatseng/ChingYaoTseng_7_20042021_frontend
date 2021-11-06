@@ -35,7 +35,7 @@ export default {
       .then(response => {
         this.isFetching = false
         this.posts = response.data
-        console.log(this.posts)
+        // console.log(this.posts)
       })
       .catch (error => {
         alert('You are not logged in!')

@@ -99,7 +99,7 @@
     </div>
 
     <!-- Comment Input -->
-    <CommentInput />
+    <CommentInput :post="post" :userId="userId"/>
 
   </div>
 </template>
@@ -191,9 +191,6 @@ export default {
           console.log(error);
         });
     },
-    createComment() {
-      console.log('create comment')
-    }
   },
 };
 </script>
