@@ -43,7 +43,7 @@
                     </label>
 
                     <div class="imageContainer flex">
-                      <img :src="img_file" class="imageContainer__img"/>
+                      <img :src="img_url" class="imageContainer__img" />
                     </div>
 
                     <textarea
@@ -56,7 +56,9 @@
                     />
 
                     <div class="file flex flex-col">
-                      <label for="image" class="file__title"> Modify image </label>
+                      <label for="image" class="file__title">
+                        Modify image
+                      </label>
                       <input
                         type="file"
                         accept="image/*"
@@ -76,7 +78,8 @@
 
                 <button
                   @click="
-                    modifyComment(), (dialogModify_inner = !dialogModify_inner)
+                    modifyPost(post.id),
+                      (dialogModify_inner = !dialogModify_inner)
                   "
                   class="dialog__btn dialog__btn__submit"
                 >
@@ -219,11 +222,12 @@ export default {
       comments: Array,
       dialogModify: false,
       dialogModify_inner: false,
+      img_url: this.post.img_url,
       dataPost: {
-        content: String,
+        content: this.post.content,
         author_id: this.userId,
       },
-      img_file: this.post.img_url,
+      img_file: null,
     };
   },
 
@@ -237,6 +241,10 @@ export default {
     }
   },
   methods: {
+    uploadImage(event) {
+      this.img_file = event.target.files[0];
+      console.log(this.img_file);
+    },
     btnDelete(id) {
       axios
         .delete("http://localhost:3000/api/post/" + id, {
@@ -301,20 +309,20 @@ export default {
           console.log(error);
         });
     },
-    modifyComment() {
+    modifyPost(postId) {
       // Send text data to modify the post
       axios
-        .put("http://localhost:3000/api/post", this.dataPost, {
+        .put("http://localhost:3000/api/post" + postId, this.dataPost, {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + localStorage.token,
           },
         })
-        // After creating the new post, return its post ID
+        // After modifying the post's content, return its post ID
         .then((response) => {
           let res = JSON.parse(response.data);
-          alert("Your post has been created!");
-          this.dataPost.content = "";   // Clear img_file after request is sent
+          alert("Your post has been modified!");
+          this.dataPost.content = ""; // Clear img_file after request is sent
           return res.postId;
         })
         // Check if an image is uploaded, and then modify the post with uploaded image
@@ -334,7 +342,7 @@ export default {
               .then((response) => {
                 let res = JSON.parse(response.data);
                 console.log(res);
-                this.img_file = "";   // Clear img_file after request is sent
+                this.img_file = ""; // Clear img_file after request is sent
                 window.location.assign("http://localhost:8080/postwall");
               })
               .catch((error) => {
@@ -348,10 +356,6 @@ export default {
           console.log(error.toJSON());
         });
     },
-  },
-  uploadImage(event) {
-    this.img_file = event.target.files[0];
-    console.log(this.img_file);
   },
 };
 </script>
@@ -552,7 +556,7 @@ export default {
     background-color: lighten($color-secondary-lighten, 10%);
   }
 
-  &__title{
+  &__title {
     margin-right: auto;
     margin-left: auto;
     color: $color-fade-darken;
@@ -561,14 +565,14 @@ export default {
 
   &__input {
     width: 100%;
-    padding: .5rem 0;
+    padding: 0.5rem 0;
     color: $color-fade-darken;
     text-align: center;
     cursor: pointer;
   }
 }
 
-input[type=file]::file-selector-button {
+input[type="file"]::file-selector-button {
   display: none;
 }
 </style>

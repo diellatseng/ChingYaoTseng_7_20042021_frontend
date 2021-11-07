@@ -13,7 +13,7 @@
       </div>
       <AppButton @click.native="logout" theme="rounded">Log Out</AppButton>
     </div>
-    <AppButton @click.native="deleteUser" theme="squared" size="small" color="danger" id="btnDelete"
+    <AppButton v-if="user.role !== 'ADMIN'" @click.native="deleteUser" theme="squared" size="small" color="danger" id="btnDelete"
       >Delete Account</AppButton
     >
   </div>
