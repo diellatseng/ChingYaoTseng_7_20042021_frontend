@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home flex flex-col">
     <img
       class="logo"
       alt="Groupmania logo"
@@ -17,7 +17,7 @@
           class="login-form"
           novalidate
         >
-          <div class="form-control">
+          <div class="form-control flex flex-col">
             <label for="email">Email</label>
             <input
               v-model="dataLogin.email"
@@ -28,7 +28,7 @@
               required
             />
           </div>
-          <div class="form-control">
+          <div class="form-control flex flex-col">
             <label for="password">Password</label>
             <input
               v-model="dataLogin.password"
@@ -52,7 +52,7 @@
           @submit.prevent="register"
           autocomplete="off"
         >
-          <div class="form-control">
+          <div class="form-control flex flex-col">
             <label for="full-name">Full Name</label>
             <input
               v-model="dataResgister.full_name"
@@ -62,7 +62,7 @@
               required
             />
           </div>
-          <div class="form-control">
+          <div class="form-control flex flex-col">
             <label for="email">Email</label>
             <input
               v-model="dataResgister.email"
@@ -73,7 +73,7 @@
               required
             />
           </div>
-          <div class="form-control">
+          <div class="form-control flex flex-col">
             <label for="password">Password</label>
             <input
               v-model="dataResgister.password"
@@ -162,7 +162,7 @@ export default {
 
 <style scoped lang="scss">
 body {
-  display: flex;
+
   justify-content: center;
   align-items: center;
 }
@@ -171,8 +171,6 @@ body {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   overflow: hidden;
 }
@@ -193,8 +191,6 @@ body {
 
 .form-control {
   position: relative;
-  display: flex;
-  flex-direction: column;
   margin: 30px 0;
 
   label {

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <form @submit.prevent method="post" enctype="multipart/form-data">
-      <div class="form-control">
+      <div class="form-control flex flex-col">
         <label class="form__text" for="post">
           <slot name="title">Write a new post...</slot>
         </label>
@@ -15,7 +15,7 @@
         />
       </div>
 
-      <div class="form-control form__image" v-show="seen">
+      <div class="form-control form__image flex flex-col" v-show="seen">
         <label for="image" class="form__image__title">
           <slot name="title__image">Upload an image</slot>
         </label>
@@ -28,7 +28,7 @@
         />
       </div>
 
-      <div class="formAction">
+      <div class="formAction flex">
         <button class="formAction__btn" @click="seen = !seen">
           <font-awesome-icon icon="fa-regular fa-image"/>
         </button>
@@ -133,8 +133,6 @@ export default {
 }
 .form-control {
   position: relative;
-  display: flex;
-  flex-direction: column;
   margin-bottom: 10px;
 
   textarea {
@@ -164,7 +162,6 @@ export default {
   }
 
   &__image {
-    display: flex;
     align-items: center;
     margin-bottom: 1rem;
     padding: 5px;
@@ -224,7 +221,6 @@ h1 {
 }
 
 .formAction {
-  display: flex;
 
   &__btn{
     margin-right: 1rem;

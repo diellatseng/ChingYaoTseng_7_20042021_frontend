@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form @submit.prevent method="post" class="form">
+        <form @submit.prevent method="post" class="form flex">
 
             <label class="form__label" for="comment"></label>
             <textarea
@@ -64,7 +64,6 @@ export default {
 
 <style scoped lang="scss">
 .form {
-  display: flex;
   border-top: 1px solid $color-fade-lighten;
   padding-top: 1rem;
 

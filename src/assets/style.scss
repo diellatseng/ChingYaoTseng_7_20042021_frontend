@@ -45,3 +45,15 @@ body {
     width: 1170px;
   }
 }
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+button {
+  cursor: pointer;
+}

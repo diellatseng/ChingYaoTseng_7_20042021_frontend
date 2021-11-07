@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container flex">
     <div @click="reload">
       <img
         class="logo"
@@ -32,7 +32,6 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: 15px;
