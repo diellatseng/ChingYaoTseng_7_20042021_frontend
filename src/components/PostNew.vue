@@ -82,7 +82,6 @@ export default {
         // After creating the new post, return its post ID
         .then((response) => {
           let res = JSON.parse(response.data);
-          alert(response.message);
           this.dataPost.content = "";   // Clear img_file after request is sent
           return res;
         })

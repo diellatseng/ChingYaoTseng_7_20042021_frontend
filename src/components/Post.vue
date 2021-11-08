@@ -250,6 +250,7 @@ export default {
           window.location.assign("http://localhost:8080/postwall");
         })
         .catch((error) => {
+          alert(error.message);
           console.log(error);
         });
     },
@@ -562,7 +563,6 @@ export default {
   &__input {
     width: 100%;
     padding: 0.5rem 0;
-    color: $color-fade-darken;
     text-align: center;
     cursor: pointer;
   }
