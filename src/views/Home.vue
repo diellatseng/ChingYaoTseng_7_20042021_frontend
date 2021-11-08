@@ -2,7 +2,7 @@
   <div class="home flex flex-col">
     <img
       class="logo"
-      alt="Groupmania logo"
+      alt="groupomania logo"
       src="../assets/logo/icon-left-font-monochrome-black.svg"
     />
 
@@ -138,7 +138,7 @@ export default {
           this.$router.push("/postwall");
         })
         .catch((error) => {
-          alert('Error! User not found or password incorrect.');
+          alert("Error! User not found or password incorrect.");
           console.log(error);
         });
     },
@@ -148,7 +148,7 @@ export default {
         .post("http://localhost:3000/api/user/register", this.dataResgister)
         .then((response) => {
           let register = JSON.parse(response.data);
-          alert('Your account has been created!');
+          alert("Your account has been created!");
           console.log(register);
           this.toggleForm();
         })
@@ -162,7 +162,6 @@ export default {
 
 <style scoped lang="scss">
 body {
-
   justify-content: center;
   align-items: center;
 }

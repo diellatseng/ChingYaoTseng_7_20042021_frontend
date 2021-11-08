@@ -3,7 +3,7 @@
     <div @click="reload">
       <img
         class="logo"
-        alt="Groupmania logo"
+        alt="groupomania logo"
         src="../assets/logo/icon-left-font-monochrome-black.svg"
       />
     </div>
@@ -16,17 +16,17 @@
 
 <script>
 export default {
-  name: 'TheHeader',
+  name: "TheHeader",
   methods: {
-    reload () {
+    reload() {
       let path = this.$route.path;
-      if (path == '/postwall') {
+      if (path == "/postwall") {
         this.$forceUpdate();
       } else {
         this.$router.push("/postwall");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
