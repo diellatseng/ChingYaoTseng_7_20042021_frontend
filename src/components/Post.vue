@@ -36,13 +36,13 @@
           <v-easy-dialog v-model="dialogModify">
             <div class="flex flex-col dialog">
               <div>
-                <form>
+                <form enctype="multipart/form-data" method="post" name="modifyPost">
                   <div class="flex flex-col">
                     <label class="dialog__title" for="post">
                       Edit your post
                     </label>
 
-                    <div class="imageContainer flex">
+                    <div v-if="img_url" class="imageContainer flex">
                       <img :src="img_url" class="imageContainer__img" />
                     </div>
 
@@ -89,12 +89,7 @@
 
               <v-easy-dialog v-model="dialogModify_inner">
                 <div class="flex flex-col">
-                  <div>Check out our stacked Dialog</div>
-
-                  <div>
-                    Notice that tab / shift+tab will only stay within this
-                    dialog.
-                  </div>
+                  <div>Your Post has been updated</div>
 
                   <div class="flex dialog__btn">
                     <button
@@ -309,52 +304,53 @@ export default {
           console.log(error);
         });
     },
-    modifyPost(postId) {
-      // Send text data to modify the post
-      axios
-        .put("http://localhost:3000/api/post" + postId, this.dataPost, {
+    async modifyPost(postId) {
+      let data = new FormData();
+
+      // Add content to data
+      data.append("content", this.post.content);
+
+      // Add file to data
+      if (!this.img_file == "") {
+        data.append("file", this.img_file);
+        data.append("name", this.img_file.name);
+      }
+
+      await axios
+        .put("http://localhost:3000/api/post/" + postId, data, {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: "Bearer " + localStorage.token,
           },
         })
-        // After modifying the post's content, return its post ID
         .then((response) => {
           let res = JSON.parse(response.data);
-          alert("Your post has been modified!");
-          this.dataPost.content = ""; // Clear img_file after request is sent
-          return res.postId;
-        })
-        // Check if an image is uploaded, and then modify the post with uploaded image
-        .then((postId) => {
-          if (!this.img_file == "") {
-            let data = new FormData();
-            data.append("file", this.img_file);
-            data.append("name", this.img_file.name);
-
-            axios
-              .put("http://localhost:3000/api/post/" + postId, data, {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                  Authorization: "Bearer " + localStorage.token,
-                },
-              })
-              .then((response) => {
-                let res = JSON.parse(response.data);
-                console.log(res);
-                this.img_file = ""; // Clear img_file after request is sent
-                window.location.assign("http://localhost:8080/postwall");
-              })
-              .catch((error) => {
-                console.log("Error from modifying post with image: " + error);
-              });
-          } else {
-            window.location.assign("http://localhost:8080/postwall");
-          }
+          console.log(res);
+          window.location.assign("http://localhost:8080/postwall");
+          // this.img_file = ""; // Clear img_file after request is sent
         })
         .catch((error) => {
-          console.log(error.toJSON());
+          console.log("Error from modifying post with image: " + error);
         });
+
+
+              // await axios
+        // .get("http://localhost:3000/api/post/" + postId, {
+        //   headers: {
+        //     Authorization: "Bearer " + localStorage.token,
+        //   },
+        // })
+        // .then((response) => {
+        //   const img_url = response.data[0].img_url;
+        //   if (img_url !== null && this.img_file !== null) {
+        //     console.log(img_url);
+        //     console.log(
+        //       "should delete image first, and then modify post by uploading image"
+        //     );
+        //   } else {
+        //     console.log("modify post by uploading image");
+        //   }
+        // });
     },
   },
 };

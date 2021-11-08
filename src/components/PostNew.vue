@@ -82,19 +82,23 @@ export default {
         // After creating the new post, return its post ID
         .then((response) => {
           let res = JSON.parse(response.data);
-          alert("Your post has been created!");
+          alert(response.message);
           this.dataPost.content = "";   // Clear img_file after request is sent
-          return res.postId;
+          return res;
         })
         // Check if an image is uploaded, and then modify the post with uploaded image
-        .then((postId) => {
+        .then((res) => {
+          console.log('Front, res: ' + res.data)
+          console.log('Front, JSON.stringify(res): ' + JSON.stringify(res.data))
+
           if (!this.img_file == "") {
             let data = new FormData();
+            data.append("content", res.data.postContent);
             data.append("file", this.img_file);
             data.append("name", this.img_file.name);
 
             axios
-              .put("http://localhost:3000/api/post/" + postId, data, {
+              .put("http://localhost:3000/api/post/" + res.data.postId, data, {
                 headers: {
                   "Content-Type": "multipart/form-data",
                   Authorization: "Bearer " + localStorage.token,
