@@ -128,7 +128,6 @@ export default {
 <style scoped lang="scss">
 .container {
   padding: 20px;
-  margin: 15px;
   border-radius: 10px;
   box-shadow: 
     rgba(0, 0, 0, 0.05) 0px 6px 18px 0px,

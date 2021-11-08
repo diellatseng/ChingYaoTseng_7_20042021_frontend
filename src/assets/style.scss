@@ -30,22 +30,6 @@ body {
   color: $color-primary;
 }
 
-@media (min-width: 768px) {
-  .container {
-    width: 750px;
-  }
-}
-@media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    width: 1170px;
-  }
-}
-
 .flex {
   display: flex;
 }
@@ -56,4 +40,29 @@ body {
 
 button {
   cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .posts,
+  .container {
+    padding-right: 25px;
+    padding-left: 25px;
+  }
+}
+@media (min-width: 992px) {
+  body {
+    font-size: 18px;
+  }
+  .posts,
+  .container  {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+}
+@media (min-width: 1200px) {
+  .posts,
+  .container  {
+    padding-right: 75px;
+    padding-left: 75px;
+  }
 }

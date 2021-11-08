@@ -8,7 +8,8 @@
         </div>
         <div class="profile__content">
           <p>Change Profile Image</p>
-          <h2>Hello {{user.full_name}} </h2>
+          <p class="greeting">Hello</p>
+          <h2 class="greeting__user">{{user.full_name}}</h2>
         </div>
       </div>
       <AppButton @click.native="logout" theme="rounded">Log Out</AppButton>
@@ -87,22 +88,19 @@ export default {
   &__card {
     min-height: 55vh;
   }
-
   &__image {
     width: 200px;
     height: 200px;
     margin: 30px auto;
     flex: 1;
-
     img {
       max-width: 100%;
       max-height: 100%;
-      border-radius: 10px;
+      border-radius: 50%;
       box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
         rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     }
   }
-
   &__content {
     width: 100%;
     text-align: center;
@@ -115,5 +113,13 @@ export default {
   bottom: 0;
   left: -2px;
   right: -2px;
+}
+
+.greeting {
+  font-size: 1.5rem;
+
+  &__user{
+    padding-bottom: 2rem;
+  }
 }
 </style>

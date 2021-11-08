@@ -321,7 +321,7 @@ export default {
 <style scoped lang="scss">
 .container {
   padding: 20px;
-  margin: 15px;
+  margin: 15px 0;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 18px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -347,6 +347,22 @@ export default {
     width: 100%;
     max-height: 200px;
     object-fit: contain;
+  }
+}
+
+@media (min-width: 768px) {
+  .content > img {
+      max-height: 250px;
+  }
+}
+@media (min-width: 992px) {
+  .content img {
+      max-height: 350px;
+  }
+}
+@media (min-width: 1200px) {
+  .content img {
+      max-height: 500px;
   }
 }
 

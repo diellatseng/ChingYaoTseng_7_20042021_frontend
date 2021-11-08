@@ -276,4 +276,25 @@ p {
 #btnSignUp {
   width: 120px;
 }
+
+@media (min-width: 768px) {
+  .forms {
+    width: 750px;
+    padding-bottom: 0;
+  }
+  .button {
+    margin-top: 50px;
+  }
+}
+@media (min-width: 992px) {
+  .button {
+    margin-top: 100px;
+  }
+}
+@media (min-width: 1200px) {
+  .button {
+    margin-top: 150px;
+  }
+}
+
 </style>

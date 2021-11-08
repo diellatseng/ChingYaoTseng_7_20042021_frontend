@@ -1,12 +1,14 @@
 <template>
-  <div v-if="isFetching === false" class="posts">
+  <div class="container-fluid">
     <TheHeader />
-    <PostCreate>Write a new post...</PostCreate>
-    <Posts :posts="posts" />
-    <div v-if="this.seen == true" class="message">
-      <h3>Welcome to <em>Groupomania</em>!</h3>
-      <p>There's nothing yet.</p>
-      <p><strong>Start sharing now!</strong></p>
+    <div v-if="isFetching === false" class="posts">
+      <PostCreate>Write a new post...</PostCreate>
+      <Posts :posts="posts" />
+      <div v-if="this.seen == true" class="message">
+        <h3>Welcome to <em>Groupomania</em>!</h3>
+        <p>There's nothing yet.</p>
+        <p><strong>Start sharing now!</strong></p>
+      </div>
     </div>
   </div>
 </template>
@@ -59,6 +61,7 @@ export default {
 <style lang="scss" scoped>
 .posts {
   min-height: 100vh;
+  padding-top: 1.5rem;
   background-color: $color-fade-lighten;
 }
 .message {
