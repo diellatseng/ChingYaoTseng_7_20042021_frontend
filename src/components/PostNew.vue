@@ -33,14 +33,11 @@
           <font-awesome-icon icon="fa-regular fa-image"/>
         </button>
 
-      <button type="submit" class="button small" @click="createPost">
-        Publish
-        <font-awesome-icon icon="fa-solid fa-paper-plane" class="submit-icon" />
-      </button>
-
+        <button type="submit" class="button small" :disabled="isDisable" @click.prevent="createPost">
+          Publish
+          <font-awesome-icon icon="fa-solid fa-paper-plane" class="submit-icon" />
+        </button>
       </div>
-
-
     </form>
   </div>
 </template>
@@ -57,10 +54,14 @@ export default {
         author_id: "",
       },
       img_file: null,
-      seen: false
+      seen: false  
     };
   },
-
+  computed: {
+    isDisable() {
+      return this.dataPost.content == "";
+    }
+  },
   methods: {
     uploadImage(event) {
       this.img_file = event.target.files[0];

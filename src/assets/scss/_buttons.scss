@@ -24,6 +24,11 @@
   &:active {
     background-color: $color-primary;
   }
+
+  &:disabled {
+    background-color: $color-fade;
+    color: $color-fade-darken;
+  }
 }
 
 .rounded {

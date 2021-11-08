@@ -72,30 +72,38 @@
               </div>
 
               <div class="flex dialog__action">
-                <button @click="dialogModify = false" class="dialog__btn">
+                <button @click="dialogModify = false, reload()" class="dialog__btn">
                   Close
                 </button>
 
                 <button
+                  :disabled="isDisable"
+
                   @click="
                     modifyPost(post.id),
                       (dialogModify_inner = !dialogModify_inner)
                   "
                   class="dialog__btn dialog__btn__submit"
+                  
                 >
                   Submit
                 </button>
               </div>
 
               <v-easy-dialog v-model="dialogModify_inner">
-                <div class="flex flex-col">
-                  <div>Your Post has been updated</div>
+                <div class="flex flex-col dialog">
+                  <div>
+                    <p class="dialog__message">
+                      Your Post has been updated
+                    </p>
+                  </div>
 
-                  <div class="flex dialog__btn">
+                  <div class="flex flex-col">
                     <button
                       @click="
                         (dialogModify_inner = false), (dialogModify = false)
                       "
+                      class="dialog__btn dialog__btn__submit"
                     >
                       Close
                     </button>
@@ -218,14 +226,19 @@ export default {
       dialogModify: false,
       dialogModify_inner: false,
       img_url: this.post.img_url,
-      dataPost: {
-        content: this.post.content,
-        author_id: this.userId,
-      },
+      // dataPost: {
+      //   content: this.post.content,
+      //   author_id: this.userId,
+      // },
       img_file: null,
     };
   },
-
+  computed: {
+    isDisable() {
+      console.log(this.post.content == "");
+      return this.post.content == "";
+    }
+  },
   created() {
     this.userId = parseInt(localStorage.userId, 10);
     this.userRole = localStorage.role;
@@ -236,6 +249,9 @@ export default {
     }
   },
   methods: {
+    reload(){
+      location.reload();
+    },
     uploadImage(event) {
       this.img_file = event.target.files[0];
       console.log(this.img_file);
@@ -482,7 +498,6 @@ export default {
     font-weight: bold;
     margin-bottom: 1rem;
   }
-
   &__input {
     padding: 10px;
     margin-bottom: 1rem;
@@ -495,17 +510,18 @@ export default {
       background-color: white;
       color: $color-primary-darken;
     }
-
     &:focus-visible {
       outline: none;
     }
   }
-
   &__action {
     margin-top: 1rem;
     justify-content: flex-end;
   }
-
+  &__message {
+    font-size: 1.2rem;
+    text-align: center;
+  }
   &__btn {
     padding: 10px 15px;
     margin-left: 1rem;
@@ -517,7 +533,10 @@ export default {
     &:hover {
       background-color: lighten($color-fade-lighten, 5%);
     }
-
+    &:disabled {
+      background-color: $color-fade;
+      color: $color-fade-darken;
+    }
     &__submit {
       color: white;
       background-color: $color-primary;

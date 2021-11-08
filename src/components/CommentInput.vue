@@ -12,7 +12,7 @@
             required
             />
             
-            <button type="submit" class="button small" @click="createComment(post.id)">
+            <button type="submit" class="button small" @click="createComment(post.id)" :disabled="isDisable">
             <font-awesome-icon icon="fa-solid fa-paper-plane" class="icon" />
 
         </button>
@@ -38,9 +38,11 @@ export default {
     post: Object,
     userId: Number,
   },
-  // created() {
-  //   this.userId = localStorage.userId;
-  // },
+  computed: {
+    isDisable() {
+      return this.dataPost.content == "";
+    }
+  },
   methods: {
       createComment(postId){
           axios

@@ -4,7 +4,7 @@
     <PostNew>Write a new post...</PostNew>
     <Posts :posts="posts" />
     <div v-if="this.seen == true" class="message">
-      <h3>Welcome to groupomania!</h3>
+      <h3>Welcome to <em>Groupomania</em>!</h3>
       <p>There's nothing yet.</p>
       <p><strong>Start sharing now!</strong></p>
     </div>
