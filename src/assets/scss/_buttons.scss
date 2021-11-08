@@ -49,3 +49,27 @@
 .danger {
   background-color: $color-danger;
 }
+
+// Other buttons
+.btn {
+  padding: 10px;
+  background: none;
+  border-radius: 5px;
+  &__like {
+    color: $color-danger-darken;
+    border: 0;
+  }
+  &__edit {
+    border: 0px;
+  }
+  &__delete {
+    margin-right: 1rem;
+    border: 0px;
+    background-color: $color-danger-darken;
+    color: white;
+    &__comment {
+        border: 0;
+        color: $color-danger-darken;
+    }
+  }
+}

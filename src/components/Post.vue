@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+
     <!-- Post header-->
     <div class="header flex">
       <div>
@@ -24,6 +25,7 @@
           >
             <font-awesome-icon icon="fa-regular fa-trash-can" size="lg" />
           </button>
+
           <!-- Button Edit -->
           <button
             @click="dialogModify = !dialogModify"
@@ -33,6 +35,7 @@
             <font-awesome-icon icon="fa-solid fa-pen-to-square" size="lg" />
           </button>
 
+          <!-- Edit dialog -->
           <v-easy-dialog v-model="dialogModify">
             <div class="flex flex-col dialog">
               <div>
@@ -125,6 +128,7 @@
     </div>
 
     <div class="actions flex">
+
       <!-- Like button -->
       <div class="actions__like">
         <button
@@ -157,35 +161,8 @@
     </div>
 
     <!-- Comments -->
-    <div v-show="seen" class="comments">
-      <div :key="comment.id" v-for="comment in this.comments">
-        <div class="comment">
-          <p class="comment__name">
-            <b>{{ comment.full_name }}</b>
-          </p>
 
-          <div class="comment__content">
-            <p>{{ comment.content }}</p>
-            <p class="comment__footer">
-              {{
-                comment.created_at
-                  | dateParse("YYYY.MM.DD HH:mm:ss")
-                  | dateFormat("DD MMM HH:mm")
-              }}
-
-              <!-- Button Delete -->
-              <button
-                @click="btnDeleteComment(post.id, comment.id)"
-                v-if="comment.author_id == userId || userRole == 'ADMIN'"
-                class="btn btn__delete__comment"
-              >
-                <font-awesome-icon icon="fa-regular fa-trash-can" size="lg" />
-              </button>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <CommentList :seen="seen" :comments="this.comments" :postId="post.id" :userId="this.userId" :userRole="this.userRole"/>
 
     <!-- Comment Input -->
     <CommentInput :post="post" :userId="userId" />
@@ -202,6 +179,7 @@ import VueFilterDateFormat from "@vuejs-community/vue-filter-date-format";
 import VEasyDialog from "v-easy-dialog";
 
 import CommentInput from "@/components/CommentInput.vue";
+import CommentList from "@/components/CommentList.vue";
 
 Vue.use(VueFilterDateParse);
 Vue.use(VueFilterDateFormat);
@@ -211,6 +189,7 @@ export default {
   components: {
     CommentInput,
     VEasyDialog,
+    CommentList
   },
   props: {
     post: Object,
@@ -218,19 +197,22 @@ export default {
   data() {
     return {
       seen: false,
+      comments: [],
+      numLikes: this.post._count_likes,
+
       userId: Number,
       userRole: String,
       liked: Boolean,
-      numLikes: this.post._count_likes,
-      comments: Array,
+
       dialogModify: false,
       dialogModify_inner: false,
       img_url: this.post.img_url,
+      img_file: null,
+
       // dataPost: {
       //   content: this.post.content,
       //   author_id: this.userId,
       // },
-      img_file: null,
     };
   },
   computed: {
@@ -267,24 +249,6 @@ export default {
         })
         .catch((error) => {
           alert(error.message);
-          console.log(error);
-        });
-    },
-    btnDeleteComment(PostId, CommentId) {
-      console.log("PostId: " + PostId);
-      console.log("CommentId: " + CommentId);
-      axios
-        .delete(
-          "http://localhost:3000/api/post/" + PostId + "/comment/" + CommentId,
-          {
-            headers: { Authorization: "Bearer " + localStorage.token },
-          }
-        )
-        .then((response) => {
-          console.log(response.data);
-          window.location.assign("http://localhost:8080/postwall");
-        })
-        .catch((error) => {
           console.log(error);
         });
     },
@@ -349,25 +313,6 @@ export default {
         .catch((error) => {
           console.log("Error from modifying post with image: " + error);
         });
-
-
-              // await axios
-        // .get("http://localhost:3000/api/post/" + postId, {
-        //   headers: {
-        //     Authorization: "Bearer " + localStorage.token,
-        //   },
-        // })
-        // .then((response) => {
-        //   const img_url = response.data[0].img_url;
-        //   if (img_url !== null && this.img_file !== null) {
-        //     console.log(img_url);
-        //     console.log(
-        //       "should delete image first, and then modify post by uploading image"
-        //     );
-        //   } else {
-        //     console.log("modify post by uploading image");
-        //   }
-        // });
     },
   },
 };
@@ -421,66 +366,6 @@ export default {
     color: $color-primary;
     border: 0;
     text-decoration: underline;
-  }
-}
-
-.comments {
-  margin-top: 5px;
-  border-top: 1px solid $color-fade-lighten;
-  background-color: white;
-}
-
-.comment {
-  padding: 10px;
-
-  &__name {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-  }
-
-  &__content {
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    background-color: $color-secondary-lightenMax;
-
-    & p {
-      margin: 0;
-    }
-  }
-
-  &__footer {
-    margin: 0;
-    color: $color-fade-darken;
-    font-size: 0.9rem;
-    text-align: end;
-  }
-}
-
-.btn {
-  padding: 10px;
-  background: none;
-  border-radius: 5px;
-
-  &__edit {
-    border: 0px;
-  }
-
-  &__delete {
-    margin-right: 1rem;
-    border: 0px;
-    background-color: $color-danger-darken;
-    color: white;
-
-    &__comment {
-      border: 0;
-      color: $color-danger-darken;
-    }
-  }
-
-  &__like {
-    color: $color-danger-darken;
-    border: 0;
   }
 }
 
