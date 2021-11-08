@@ -1,7 +1,7 @@
 <template>
   <div v-if="isFetching === false" class="posts">
     <TheHeader />
-    <PostNew>Write a new post...</PostNew>
+    <PostCreate>Write a new post...</PostCreate>
     <Posts :posts="posts" />
     <div v-if="this.seen == true" class="message">
       <h3>Welcome to <em>Groupomania</em>!</h3>
@@ -13,8 +13,8 @@
 
 <script>
 import TheHeader from "@/components/TheHeader.vue";
-import PostNew from "@/components/PostNew.vue";
-import Posts from "@/components/Posts.vue";
+import PostCreate from "@/components/PostCreate.vue";
+import Posts from "@/components/PostList.vue";
 
 import Vue from "vue";
 import axios from "axios";
@@ -25,7 +25,7 @@ Vue.use(VueAxios, axios);
 export default {
   components: {
     TheHeader,
-    PostNew,
+    PostCreate,
     Posts,
   },
   data() {

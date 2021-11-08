@@ -46,7 +46,7 @@
 import axios from "axios";
 
 export default {
-  name: "postNew",
+  name: "postCreate",
   data() {
     return {
       dataPost: {

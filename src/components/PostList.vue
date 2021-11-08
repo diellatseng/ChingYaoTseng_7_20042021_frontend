@@ -8,7 +8,7 @@
 
 <script>
 
-import Post from "./Post.vue";
+import Post from "./PostSingle.vue";
 
 export default {
   name: 'Posts',
