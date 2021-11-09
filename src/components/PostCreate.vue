@@ -54,20 +54,34 @@ export default {
         author_id: "",
       },
       img_file: null,
-      seen: false  
+      seen: false,
+      validMimeTypes: [
+        'image/jpg',
+        'image/jpeg',
+        'image/png',
+        'image/gif'
+      ]
     };
   },
   methods: {
     uploadImage(event) {
-      this.img_file = event.target.files[0];
-      console.log(this.img_file);
+      // If a file is attached
+      if(event.target.files[0]){
+        // Validate file
+        if(this.validMimeTypes.includes(event.target.files[0].type)) {
+          this.img_file = event.target.files[0];
+        } else {
+          // If file is not validated, add tag 'Invalid'
+          this.img_file = 'Invalid';
+          alert('Invalid file type! Accepts only .png, .jpg, .jpeg and .gif extensions.')
+        }
+      }
     },
 
     createPost() {
-      if (localStorage.userId) {
+      if (localStorage.userId && this.dataPost.content && this.img_file !== 'Invalid') {
+
         this.dataPost.author_id = localStorage.userId;
-      }
-      if (this.dataPost.content) {
       // Send text data to create a new post
       axios
         .post("http://localhost:3000/api/post", this.dataPost, {
@@ -117,7 +131,7 @@ export default {
           console.log(error.toJSON());
         });
       } else {
-        alert("Oops! Your content is empty.")
+        alert("Oops! You're not logged in? The content is empty? Or your attached file is not allowed.")
       }
     },
   },
