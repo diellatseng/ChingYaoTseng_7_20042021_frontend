@@ -12,7 +12,7 @@
             required
             />
             
-            <button type="submit" class="button small" @click="createComment(post.id)" :disabled="isDisable">
+            <button type="submit" class="button small" @click="createComment(post.id)">
             <font-awesome-icon icon="fa-solid fa-paper-plane" class="icon" />
 
         </button>
@@ -38,13 +38,9 @@ export default {
     post: Object,
     userId: Number,
   },
-  computed: {
-    isDisable() {
-      return this.dataPost.content == "";
-    }
-  },
   methods: {
       createComment(postId){
+        if(this.dataPost.content) {
           axios
             .post("http://localhost:3000/api/post/" + postId + "/comment", this.dataPost, {
               headers: {
@@ -59,6 +55,9 @@ export default {
             .catch((error) => {
               console.log(error);
             });
+        } else {
+          alert('No content!');
+        }
       },
   }
 }

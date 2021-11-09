@@ -154,6 +154,7 @@ export default {
           this.toggleForm();
         })
         .catch((error) => {
+          alert('Oops! This email address is already being used');
           console.log(error);
         });
     },
