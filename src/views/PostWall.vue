@@ -1,13 +1,15 @@
 <template>
   <div class="container-fluid">
     <TheHeader />
-    <div v-if="isFetching === false" class="posts">
-      <PostCreate>Write a new post...</PostCreate>
-      <Posts :posts="posts" />
-      <div v-if="this.seen == true" class="message">
-        <h3>Welcome to <em>Groupomania</em>!</h3>
-        <p>There's nothing yet.</p>
-        <p><strong>Start sharing now!</strong></p>
+    <div v-if="isFetching === false" class="post-wall">
+      <div class="posts">
+        <PostCreate>Write a new post...</PostCreate>
+        <Posts :posts="posts" />
+        <div v-if="this.seen == true" class="message">
+          <h3>Welcome to <em>Groupomania</em> !</h3>
+          <p>There's nothing yet.</p>
+          <p><strong>Start sharing now!</strong></p>
+        </div>
       </div>
     </div>
   </div>
@@ -59,15 +61,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.posts {
+.post-wall {
   min-height: 100vh;
-  padding-top: 1.5rem;
   background-color: $color-fade-lighten;
+}
+.posts {
+  padding-top: 65px;
+  padding-bottom: 1.5rem;
 }
 .message {
   background-color: $color-primary-lighten;
   padding: 20px;
-  margin: 15px;
+  margin: 15px auto;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 18px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;

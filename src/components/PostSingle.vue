@@ -208,11 +208,6 @@ export default {
       dialogModify_inner: false,
       img_url: this.post.img_url,
       img_file: null,
-
-      // dataPost: {
-      //   content: this.post.content,
-      //   author_id: this.userId,
-      // },
     };
   },
   computed: {

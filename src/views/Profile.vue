@@ -1,5 +1,5 @@
 <template>
-  <div id="profile">
+  <div class="profile">
     <TheHeader />
     <div class="container">
       <div class="profile__card">
@@ -86,6 +86,7 @@ export default {
   overflow: hidden;
 
   &__card {
+    margin-top: 70px;
     min-height: 55vh;
   }
   &__image {

@@ -144,6 +144,7 @@ export default {
     },
     register() {
       console.log(this.dataResgister);
+      //Add Validation
       axios
         .post("http://localhost:3000/api/user/register", this.dataResgister)
         .then((response) => {
