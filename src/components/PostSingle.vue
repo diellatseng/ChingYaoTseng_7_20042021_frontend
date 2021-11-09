@@ -202,6 +202,12 @@ export default {
       dialogModify_inner: false,
       img_url: this.post.img_url,
       img_file: null,
+      validMimeTypes: [
+        'image/jpg',
+        'image/jpeg',
+        'image/png',
+        'image/gif'
+      ]
     };
   },
   created() {
@@ -218,8 +224,17 @@ export default {
       location.reload();
     },
     uploadImage(event) {
-      this.img_file = event.target.files[0];
-      console.log(this.img_file);
+      // If a file is attached
+      if(event.target.files[0]){
+        // Validate file
+        if(this.validMimeTypes.includes(event.target.files[0].type)) {
+          this.img_file = event.target.files[0];
+        } else {
+          // If file is not validated, add tag 'Invalid'
+          this.img_file = 'Invalid';
+          alert('Invalid file type! Accepts only .png, .jpg, .jpeg and .gif extensions.')
+        }
+      }
     },
     btnDelete(id) {
       axios
@@ -269,7 +284,7 @@ export default {
         });
     },
     async modifyPost(postId) {
-      if(this.post.content){
+      if(this.post.content && this.img_file !== 'Invalid'){
         this.dialogModify_inner = !this.dialogModify_inner;
 
         let data = new FormData();
@@ -301,7 +316,7 @@ export default {
           });
 
       } else {
-        alert('Oops! Your content is empty.')
+        alert('Oops! Your content is empty, or you have attached an invalid file.')
       }
     },
   },
