@@ -33,7 +33,7 @@
           <font-awesome-icon icon="fa-regular fa-image"/>
         </button>
 
-        <button type="submit" class="button small" :disabled="isDisable" @click.prevent="createPost">
+        <button type="submit" class="button small" @click.prevent="createPost">
           Publish
           <font-awesome-icon icon="fa-solid fa-paper-plane" class="submit-icon" />
         </button>
@@ -57,11 +57,6 @@ export default {
       seen: false  
     };
   },
-  computed: {
-    isDisable() {
-      return this.dataPost.content == "";
-    }
-  },
   methods: {
     uploadImage(event) {
       this.img_file = event.target.files[0];
@@ -72,6 +67,7 @@ export default {
       if (localStorage.userId) {
         this.dataPost.author_id = localStorage.userId;
       }
+      if (this.dataPost.content) {
       // Send text data to create a new post
       axios
         .post("http://localhost:3000/api/post", this.dataPost, {
@@ -120,6 +116,9 @@ export default {
         .catch((error) => {
           console.log(error.toJSON());
         });
+      } else {
+        alert("Oops! Your content is empty.")
+      }
     },
   },
 };

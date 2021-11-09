@@ -80,14 +80,8 @@
                 </button>
 
                 <button
-                  :disabled="isDisable"
-
-                  @click="
-                    modifyPost(post.id),
-                      (dialogModify_inner = !dialogModify_inner)
-                  "
+                  @click="modifyPost(post.id)"
                   class="dialog__btn dialog__btn__submit"
-                  
                 >
                   Submit
                 </button>
@@ -210,12 +204,6 @@ export default {
       img_file: null,
     };
   },
-  computed: {
-    isDisable() {
-      console.log(this.post.content == "");
-      return this.post.content == "";
-    }
-  },
   created() {
     this.userId = parseInt(localStorage.userId, 10);
     this.userRole = localStorage.role;
@@ -281,33 +269,40 @@ export default {
         });
     },
     async modifyPost(postId) {
-      let data = new FormData();
+      if(this.post.content){
+        this.dialogModify_inner = !this.dialogModify_inner;
 
-      // Add content to data
-      data.append("content", this.post.content);
+        let data = new FormData();
 
-      // Add file to data
-      if (!this.img_file == "") {
-        data.append("file", this.img_file);
-        data.append("name", this.img_file.name);
+        // Add content to data
+        data.append("content", this.post.content);
+
+        // Add file to data
+        if (!this.img_file == "") {
+          data.append("file", this.img_file);
+          data.append("name", this.img_file.name);
+        }
+
+        await axios
+          .put("http://localhost:3000/api/post/" + postId, data, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: "Bearer " + localStorage.token,
+            },
+          })
+          .then((response) => {
+            let res = JSON.parse(response.data);
+            console.log(res);
+            window.location.assign("http://localhost:8080/postwall");
+            // this.img_file = ""; // Clear img_file after request is sent
+          })
+          .catch((error) => {
+            console.log("Error from modifying post with image: " + error);
+          });
+
+      } else {
+        alert('Oops! Your content is empty.')
       }
-
-      await axios
-        .put("http://localhost:3000/api/post/" + postId, data, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: "Bearer " + localStorage.token,
-          },
-        })
-        .then((response) => {
-          let res = JSON.parse(response.data);
-          console.log(res);
-          window.location.assign("http://localhost:8080/postwall");
-          // this.img_file = ""; // Clear img_file after request is sent
-        })
-        .catch((error) => {
-          console.log("Error from modifying post with image: " + error);
-        });
     },
   },
 };
