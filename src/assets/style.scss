@@ -45,24 +45,15 @@ button {
 @media (min-width: 768px) {
   .posts,
   .container {
-    padding-right: 25px;
-    padding-left: 25px;
+    padding-right: 20%;
+    padding-left: 20%;
   }
 }
 @media (min-width: 992px) {
   body {
     font-size: 18px;
   }
-  .posts,
-  .container  {
-    padding-right: 50px;
-    padding-left: 50px;
-  }
 }
 @media (min-width: 1200px) {
-  .posts,
-  .container  {
-    padding-right: 75px;
-    padding-left: 75px;
-  }
+
 }
